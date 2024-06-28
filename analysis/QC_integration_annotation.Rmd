@@ -248,7 +248,7 @@ QC_post_VlnPlots_zoom
 
 ## Integration and clustering
 
-Normalization and scaling using SCTransform.
+Normalization and scaling.
 
 ```{r eval=FALSE}
 DefaultAssay(EAM) <- "RNA"
@@ -258,7 +258,7 @@ EAM_not_integrated <- EAM %>%
     ScaleData(features = rownames(EAM))
 ```
 
-PCA without integration
+PCA 
 
 ```{r, eval=FALSE, include=FALSE}
 EAM_not_integrated <- RunPCA(EAM_not_integrated, npcs = 50)
@@ -301,7 +301,7 @@ saveRDS(EAM_not_integrated,
         here::here(output_dir_data, "EAM_not_integrated.rds"))
 ```
 
-Integrate the samples
+Integrate the samples using Harmony
 
 ```{r eval=FALSE}
 EAM_integrated <- RunHarmony(EAM_not_integrated, assay.use="RNA", group.by.vars = "Sample", dims.use = 1:50)
@@ -365,6 +365,7 @@ VlnPlot(EAM_integrated, features = c("nCount_RNA", "nFeature_RNA", "percent.mt",
 ```
 
 Check cell cycle genes
+
 ```{r Cell_cycle_UMAP, fig.width=5, fig.height=4}
 DefaultAssay(EAM_integrated) <- "RNA"
 s.genes <- cc.genes$s.genes
