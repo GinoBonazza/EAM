@@ -514,13 +514,13 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong1061bf3">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongbc94941">
 <span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong> 1061bf3
+aria-hidden="true"></span> <strong>Repository version:</strong> bc94941
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrong1061bf3"
+<div id="strongRepositoryversionstrongbc94941"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -529,7 +529,7 @@ and connecting the code version to the results is critical for
 reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version 1061bf3.
+The results in this page were generated with repository version bc94941.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -546,7 +546,6 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
 
 Untracked files:
     Untracked:  code/QC_integration_annotation_2.Rmd
@@ -607,6 +606,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+bc94941
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+<td>
+wflow_publish("analysis/QC_integration_annotation.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -724,6 +757,43 @@ QC_pre_VlnPlots &lt;- p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
 
 QC_pre_VlnPlots</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/QC_pre_VlnPlots-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC_pre_VlnPlots-1">
+Past versions of QC_pre_VlnPlots-1.png
+</button>
+</p>
+<div id="fig-QC_pre_VlnPlots-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>p1 &lt;- VlnPlot(EAM_preQC, features = &quot;nCount_RNA&quot;, group.by = &quot;Sample&quot;, pt.size = 0, y.max = 20000) + theme(axis.title.x = element_blank()) + NoLegend()
 
 p2 &lt;- VlnPlot(EAM_preQC, features = &quot;nFeature_RNA&quot;, group.by = &quot;Sample&quot;, pt.size = 0, y.max = 5000) + theme(axis.title.x = element_blank()) + NoLegend()
@@ -736,6 +806,43 @@ QC_pre_VlnPlots_zoom &lt;- p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
 
 QC_pre_VlnPlots_zoom</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/QC_pre_VlnPlots_zoom-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC_pre_VlnPlots_zoom-1">
+Past versions of QC_pre_VlnPlots_zoom-1.png
+</button>
+</p>
+<div id="fig-QC_pre_VlnPlots_zoom-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Doublets detection</p>
 <pre class="r"><code>EAM_preQC_sce &lt;- as.SingleCellExperiment(EAM_preQC)
 EAM_preQC_sce &lt;- scDblFinder(EAM_preQC_sce, samples=&quot;Sample&quot;, clusters = TRUE)
@@ -756,6 +863,43 @@ QC_pre_Doublets &lt;- p1 + p2 + plot_layout(ncol = 2)
 
 QC_pre_Doublets</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/QC_pre_Doublets-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC_pre_Doublets-1">
+Past versions of QC_pre_Doublets-1.png
+</button>
+</p>
+<div id="fig-QC_pre_Doublets-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>saveRDS(EAM_preQC, 
         here::here(output_dir_data, &quot;EAM_preQC.rds&quot;))</code></pre>
 <p>Remove doublets</p>
@@ -778,6 +922,43 @@ QC_pre_no_doublets_VlnPlots &lt;- p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
 
 QC_pre_no_doublets_VlnPlots</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/QC_pre_no_doublets_VlnPlots-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC_pre_no_doublets_VlnPlots-1">
+Past versions of QC_pre_no_doublets_VlnPlots-1.png
+</button>
+</p>
+<div id="fig-QC_pre_no_doublets_VlnPlots-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>p1 &lt;- VlnPlot(EAM_preQC_no_doublets, features = &quot;nCount_RNA&quot;, group.by = &quot;Sample&quot;, pt.size = 0, y.max = 20000) + theme(axis.title.x = element_blank()) + NoLegend()
 
 p2 &lt;- VlnPlot(EAM_preQC_no_doublets, features = &quot;nFeature_RNA&quot;, group.by = &quot;Sample&quot;, pt.size = 0, y.max = 5000) + theme(axis.title.x = element_blank()) + NoLegend()
@@ -790,6 +971,43 @@ QC_pre_no_doublets_VlnPlots_zoom &lt;- p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
 
 QC_pre_no_doublets_VlnPlots_zoom</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/QC_pre_no_doublets_VlnPlots_zoom-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC_pre_no_doublets_VlnPlots_zoom-1">
+Past versions of QC_pre_no_doublets_VlnPlots_zoom-1.png
+</button>
+</p>
+<div id="fig-QC_pre_no_doublets_VlnPlots_zoom-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Filter based on number of counts, features and percentage of
 mitochondrial genes</p>
 <pre class="r"><code>EAM &lt;- subset(EAM_preQC_no_doublets, subset = 
@@ -814,6 +1032,43 @@ QC_post_VlnPlots &lt;- p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
 
 QC_post_VlnPlots</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/QC_post_VlnPlots-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC_post_VlnPlots-1">
+Past versions of QC_post_VlnPlots-1.png
+</button>
+</p>
+<div id="fig-QC_post_VlnPlots-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>p1 &lt;- VlnPlot(EAM, features = &quot;nCount_RNA&quot;, group.by = &quot;Sample&quot;, pt.size = 0, y.max = 20000) + theme(axis.title.x = element_blank()) + NoLegend()
 
 p2 &lt;- VlnPlot(EAM, features = &quot;nFeature_RNA&quot;, group.by = &quot;Sample&quot;, pt.size = 0, y.max = 5000) + theme(axis.title.x = element_blank()) + NoLegend()
@@ -826,21 +1081,95 @@ QC_post_VlnPlots_zoom &lt;- p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
 
 QC_post_VlnPlots_zoom</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/QC_post_VlnPlots_zoom-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC_post_VlnPlots_zoom-1">
+Past versions of QC_post_VlnPlots_zoom-1.png
+</button>
+</p>
+<div id="fig-QC_post_VlnPlots_zoom-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="integration-and-clustering" class="section level2">
 <h2>Integration and clustering</h2>
-<p>Normalization and scaling using SCTransform.</p>
+<p>Normalization and scaling.</p>
 <pre class="r"><code>DefaultAssay(EAM) &lt;- &quot;RNA&quot;
 EAM_not_integrated &lt;- EAM %&gt;%
     NormalizeData() %&gt;%
     FindVariableFeatures(selection.method = &quot;vst&quot;, nfeatures = 2000) %&gt;% 
     ScaleData(features = rownames(EAM))</code></pre>
-<p>PCA without integration</p>
+<p>PCA</p>
 <pre class="r"><code>saveRDS(EAM_not_integrated, 
         here::here(output_dir_data, &quot;EAM_not_integrated.rds&quot;))</code></pre>
 <pre class="r"><code>EAM_not_integrated &lt;- readRDS(here::here(output_dir_data, &quot;EAM_not_integrated.rds&quot;))</code></pre>
 <pre class="r"><code>ElbowPlot(EAM_not_integrated, ndims = 50)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/Elbow_not_integrated-1.png" width="2400" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Elbow_not_integrated-1">
+Past versions of Elbow_not_integrated-1.png
+</button>
+</p>
+<div id="fig-Elbow_not_integrated-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Clustering without integration</p>
 <pre class="r"><code>EAM_not_integrated &lt;- RunUMAP(EAM_not_integrated, dims = 1:40)
 EAM_not_integrated &lt;- FindNeighbors(EAM_not_integrated, dims = 1:40)
@@ -848,12 +1177,86 @@ EAM_not_integrated &lt;- FindClusters(EAM_not_integrated, resolution = seq(0.1, 
 <pre class="r"><code>clustree::clustree(EAM_not_integrated@meta.data[,grep(&quot;RNA_snn_res&quot;, colnames(EAM_not_integrated@meta.data))],
                    prefix = &quot;RNA_snn_res.&quot;)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/Clustree_not_integrated-1.png" width="3600" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Clustree_not_integrated-1">
+Past versions of Clustree_not_integrated-1.png
+</button>
+</p>
+<div id="fig-Clustree_not_integrated-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(EAM_not_integrated, reduction = &quot;umap&quot;, shuffle = T,
         group.by = c(&quot;RNA_snn_res.0.2&quot;, &quot;Sample&quot;), ncol = 2)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/UMAPs_not_integrated-1.png" width="7200" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-UMAPs_not_integrated-1">
+Past versions of UMAPs_not_integrated-1.png
+</button>
+</p>
+<div id="fig-UMAPs_not_integrated-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>saveRDS(EAM_not_integrated, 
         here::here(output_dir_data, &quot;EAM_not_integrated.rds&quot;))</code></pre>
-<p>Integrate the samples</p>
+<p>Integrate the samples using Harmony</p>
 <pre class="r"><code>EAM_integrated &lt;- RunHarmony(EAM_not_integrated, assay.use=&quot;RNA&quot;, group.by.vars = &quot;Sample&quot;, dims.use = 1:50)</code></pre>
 <pre class="r"><code>EAM_integrated &lt;- RunUMAP(EAM_integrated, dims = 1:40, reduction = &quot;harmony&quot;)
 EAM_integrated &lt;- FindNeighbors(EAM_integrated, dims = 1:40, reduction = &quot;harmony&quot;)
@@ -864,11 +1267,85 @@ EAM_integrated &lt;- FindClusters(EAM_integrated, resolution = seq(0.1, 0.8, by=
 <pre class="r"><code>clustree::clustree(EAM_integrated@meta.data[,grep(&quot;RNA_snn_res&quot;, colnames(EAM_integrated@meta.data))],
                    prefix = &quot;RNA_snn_res.&quot;)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/Clustree_integrated-1.png" width="3600" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Clustree_integrated-1">
+Past versions of Clustree_integrated-1.png
+</button>
+</p>
+<div id="fig-Clustree_integrated-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>EAM_integrated$RNA_snn_res.0.2 &lt;- factor(EAM_integrated$RNA_snn_res.0.2, levels = c(&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;, &quot;11&quot;, &quot;12&quot;, &quot;13&quot;, &quot;14&quot;, &quot;15&quot;))
 Idents(EAM_integrated) &lt;- EAM_integrated$RNA_snn_res.0.2
 DimPlot(EAM_integrated, reduction = &quot;umap&quot;, shuffle = T,
         group.by = c(&quot;RNA_snn_res.0.2&quot;, &quot;Sample&quot;, &quot;Group&quot;), ncol = 3)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/UMAPs_integrated-1.png" width="8400" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-UMAPs_integrated-1">
+Past versions of UMAPs_integrated-1.png
+</button>
+</p>
+<div id="fig-UMAPs_integrated-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Find the markers that characterize each cell population</p>
 <pre class="r"><code>DefaultAssay(EAM_integrated) &lt;- &quot;RNA&quot;
 Idents(EAM_integrated) &lt;- &quot;RNA_snn_res.0.2&quot;
@@ -887,9 +1364,83 @@ Heatmap &lt;- DoHeatmap(EAM_integrated, draw.line = F, features = Markers_top10$
                            &quot;inches&quot;))
 Heatmap</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/Heatmap_low_quality-1.png" width="9000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Heatmap_low_quality-1">
+Past versions of Heatmap_low_quality-1.png
+</button>
+</p>
+<div id="fig-Heatmap_low_quality-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Check QC parameters in each cluster</p>
 <pre class="r"><code>VlnPlot(EAM_integrated, features = c(&quot;nCount_RNA&quot;, &quot;nFeature_RNA&quot;, &quot;percent.mt&quot;, &quot;percent.rp&quot;), ncol = 2, pt.size = 0)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/QC_VlnPlots_low_quality-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC_VlnPlots_low_quality-1">
+Past versions of QC_VlnPlots_low_quality-1.png
+</button>
+</p>
+<div id="fig-QC_VlnPlots_low_quality-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Check cell cycle genes</p>
 <pre class="r"><code>DefaultAssay(EAM_integrated) &lt;- &quot;RNA&quot;
 s.genes &lt;- cc.genes$s.genes
@@ -898,6 +1449,43 @@ EAM_integrated &lt;- CellCycleScoring(EAM_integrated, s.features = s.genes, g2m.
 DimPlot(EAM_integrated, reduction = &quot;umap&quot;, shuffle = T,
         group.by = &quot;Phase&quot;)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/Cell_cycle_UMAP-1.png" width="3000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Cell_cycle_UMAP-1">
+Past versions of Cell_cycle_UMAP-1.png
+</button>
+</p>
+<div id="fig-Cell_cycle_UMAP-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="cell-type-annotation" class="section level2">
 <h2>Cell type annotation</h2>
@@ -942,28 +1530,324 @@ write.csv(Markers_top3, here::here(output_dir_data, &quot;EAM_Markers_top3_cell_
   guides(fill = guide_colorbar(barwidth = 1, barheight = 4))
 Heatmap</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/Heatmap-1.png" width="7200" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Heatmap-1">
+Past versions of Heatmap-1.png
+</button>
+</p>
+<div id="fig-Heatmap-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>p &lt;- DimPlot(EAM_integrated, group.by = &quot;cell_type&quot;, reduction = &quot;umap&quot;, label = F) + 
   NoLegend() + 
   theme(axis.text=element_text(size=10, face = &quot;bold&quot;), axis.title = element_text(size = 14, face = &quot;bold&quot;)) + 
   theme(plot.title = element_blank())
 LabelClusters(p, id = &quot;cell_type&quot;, fontface = &quot;bold&quot;, size = 5, repel = T)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/UMAP_cell_type-1.png" width="3900" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-UMAP_cell_type-1">
+Past versions of UMAP_cell_type-1.png
+</button>
+</p>
+<div id="fig-UMAP_cell_type-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DotPlot(EAM_integrated, assay = &quot;RNA&quot;, features = rev(Markers_top3$gene), dot.scale = 5, cluster.idents = FALSE) +
   RotatedAxis() +
   coord_flip() +
   theme(axis.title = element_blank(), axis.text.x = element_text(size = 14), axis.text.y = element_text(size = 13), legend.text = element_text(size = 9), legend.title = element_text(size = 11), plot.margin = unit(c(0, 0, 0, 0.1), 
                            &quot;inches&quot;))</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/DotPlot_markers-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-DotPlot_markers-1">
+Past versions of DotPlot_markers-1.png
+</button>
+</p>
+<div id="fig-DotPlot_markers-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(EAM_integrated, features = c(&quot;Cd3e&quot;, &quot;Col1a1&quot;, &quot;Cxcl2&quot;, &quot;Mki67&quot;, &quot;Nkg7&quot;, &quot;Ptprb&quot;, &quot;Tnnt2&quot;, &quot;Msln&quot;, &quot;Rgs5&quot;, &quot;Ppbp&quot;), ncol = 4)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/FeatPlot_markers-1.png" width="7200" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-FeatPlot_markers-1">
+Past versions of FeatPlot_markers-1.png
+</button>
+</p>
+<div id="fig-FeatPlot_markers-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(EAM_integrated, features = c(&quot;Acta2&quot;, &quot;Col1a1&quot;, &quot;Col3a1&quot;, &quot;Postn&quot;, &quot;Vim&quot;, &quot;Fn1&quot;), ncol = 3)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/FeatPlot_markers_fibro-1.png" width="9000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-FeatPlot_markers_fibro-1">
+Past versions of FeatPlot_markers_fibro-1.png
+</button>
+</p>
+<div id="fig-FeatPlot_markers_fibro-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(subset(EAM_integrated, cell_type == &quot;Fibroblasts&quot;), features = c(&quot;Acta2&quot;, &quot;Col1a1&quot;, &quot;Col3a1&quot;, &quot;Postn&quot;, &quot;Vim&quot;, &quot;Fn1&quot;), ncol = 3)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/FeatPlot_markers_fibro_2-1.png" width="9000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-FeatPlot_markers_fibro_2-1">
+Past versions of FeatPlot_markers_fibro_2-1.png
+</button>
+</p>
+<div id="fig-FeatPlot_markers_fibro_2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(subset(EAM_integrated, cell_type == &quot;Fibroblasts&quot;), features = c(&quot;Acta2&quot;), split.by = &quot;Group&quot;, ncol = 3)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/FeatPlot_Acta2_Group-1.png" width="9000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-FeatPlot_Acta2_Group-1">
+Past versions of FeatPlot_Acta2_Group-1.png
+</button>
+</p>
+<div id="fig-FeatPlot_Acta2_Group-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(subset(EAM_integrated, cell_type == &quot;Fibroblasts&quot;), features = c(&quot;Acta2&quot;), split.by = &quot;Sample&quot;) + plot_layout(ncol = 3, nrow = 3)</code></pre>
 <p><img src="figure/QC_integration_annotation.Rmd/FeatPlot_Acta2_Sample-1.png" width="9000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-FeatPlot_Acta2_Sample-1">
+Past versions of FeatPlot_Acta2_Sample-1.png
+</button>
+</p>
+<div id="fig-FeatPlot_Acta2_Sample-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+8ad9f1d
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-06-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>saveRDS(EAM_integrated, 
         here::here(output_dir_data, &quot;EAM_integrated.rds&quot;))</code></pre>
 <br>
