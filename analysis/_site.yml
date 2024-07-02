@@ -5,6 +5,11 @@ navbar:
   left:
   - text: Home
     href: index.html
+  - text: Analysis
+    icon: fa-navicon
+    menu:
+      - text: "QC, integration, annotation"
+        href: QC_integration_annotation.html
   - text: About
     href: about.html
   - text: License
