@@ -55,6 +55,7 @@ library(patchwork)
 library(statmod)
 library(ArchR)
 library(clustree)
+library(gprofiler2)
 
 #Output paths
 output_dir_data <- here::here("output", current_file)
@@ -213,6 +214,7 @@ EAM <- subset(EAM_preQC_no_doublets, subset =
                 nCount_RNA > 500)
 
 table(EAM$Sample)
+rm(EAM_preQC_no_doublets)
 ```
 
 Check quality control parameters
@@ -255,7 +257,7 @@ DefaultAssay(EAM) <- "RNA"
 EAM_not_integrated <- EAM %>%
     NormalizeData() %>%
     FindVariableFeatures(selection.method = "vst", nfeatures = 2000) %>% 
-    ScaleData(features = rownames(EAM))
+    ScaleData(features = rownames(EAM), vars.to.regress = "percent.mt")
 ```
 
 PCA 
@@ -291,9 +293,9 @@ clustree::clustree(EAM_not_integrated@meta.data[,grep("RNA_snn_res", colnames(EA
                    prefix = "RNA_snn_res.")
 ```
 
-```{r UMAPs_not_integrated, fig.width=12, fig.height=6}
+```{r UMAPs_not_integrated, fig.width=14, fig.height=4}
 DimPlot(EAM_not_integrated, reduction = "umap", shuffle = T,
-        group.by = c("RNA_snn_res.0.2", "Sample"), ncol = 2)
+        group.by = c("RNA_snn_res.0.2", "Sample", "Group"), ncol = 3)
 ```
 
 ```{r eval=FALSE}
@@ -308,8 +310,8 @@ EAM_integrated <- RunHarmony(EAM_not_integrated, assay.use="RNA", group.by.vars 
 ```
 
 ```{r eval=FALSE}
-EAM_integrated <- RunUMAP(EAM_integrated, dims = 1:40, reduction = "harmony")
-EAM_integrated <- FindNeighbors(EAM_integrated, dims = 1:40, reduction = "harmony")
+EAM_integrated <- RunUMAP(EAM_integrated, dims = 1:30, reduction = "harmony")
+EAM_integrated <- FindNeighbors(EAM_integrated, dims = 1:30, reduction = "harmony")
 EAM_integrated <- FindClusters(EAM_integrated, resolution = seq(0.1, 0.8, by=0.1))
 ```
 
@@ -328,10 +330,8 @@ clustree::clustree(EAM_integrated@meta.data[,grep("RNA_snn_res", colnames(EAM_in
 ```
 
 ```{r UMAPs_integrated, fig.width=14, fig.height=4}
-EAM_integrated$RNA_snn_res.0.2 <- factor(EAM_integrated$RNA_snn_res.0.2, levels = c("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"))
-Idents(EAM_integrated) <- EAM_integrated$RNA_snn_res.0.2
 DimPlot(EAM_integrated, reduction = "umap", shuffle = T,
-        group.by = c("RNA_snn_res.0.2", "Sample", "Group"), ncol = 3)
+        group.by = c("RNA_snn_res.0.2", "Sample", "Group"), ncol = 3, label = T)
 ```
 
 Find the markers that characterize each cell population
@@ -360,7 +360,7 @@ Heatmap
 
 Check QC parameters in each cluster
 
-```{r QC_VlnPlots_low_quality, fig.width=8, fig.height=6}
+```{r QC_VlnPlots_low_quality, fig.width=10, fig.height=6}
 VlnPlot(EAM_integrated, features = c("nCount_RNA", "nFeature_RNA", "percent.mt", "percent.rp"), ncol = 2, pt.size = 0)
 ```
 
@@ -368,9 +368,9 @@ Check cell cycle genes
 
 ```{r Cell_cycle_UMAP, fig.width=5, fig.height=4}
 DefaultAssay(EAM_integrated) <- "RNA"
-s.genes <- cc.genes$s.genes
-g2m.genes <- cc.genes$g2m.genes
-EAM_integrated <- CellCycleScoring(EAM_integrated, s.features = s.genes, g2m.features = g2m.genes)
+mmus_s = gorth(cc.genes.updated.2019$s.genes, source_organism = "hsapiens", target_organism = "mmusculus")$ortholog_name
+mmus_g2m = gorth(cc.genes.updated.2019$g2m.genes, source_organism = "hsapiens", target_organism = "mmusculus")$ortholog_name
+EAM_integrated <- CellCycleScoring(EAM_integrated, s.features = mmus_s, g2m.features = mmus_g2m)
 DimPlot(EAM_integrated, reduction = "umap", shuffle = T,
         group.by = "Phase")
 ```
@@ -381,10 +381,10 @@ DimPlot(EAM_integrated, reduction = "umap", shuffle = T,
 Annotate the clusters based on the characteristic markers
 
 ```{r}
-EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("0", "3", "6", "11"), "cell_type"] = "T-cells"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("0", "3", "4", "11"), "cell_type"] = "T-cells"
 EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("1"), "cell_type"] = "B-cells"
 EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("2"), "cell_type"] = "Fibroblasts"
-EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("4", "5", "8"), "cell_type"] = "Myeloid cells"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("5", "6", "8"), "cell_type"] = "Myeloid cells"
 EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("7"), "cell_type"] = "Proliferating lymphocytes"
 EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("9"), "cell_type"] = "NK-cells"
 EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("10"), "cell_type"] = "Endothelial cells"
@@ -445,7 +445,7 @@ DotPlot(EAM_integrated, assay = "RNA", features = rev(Markers_top3$gene), dot.sc
 ```
 
 ```{r FeatPlot_markers, fig.width=12, fig.height=8}
-FeaturePlot(EAM_integrated, features = c("Cd3e", "Col1a1", "Cxcl2", "Mki67", "Nkg7", "Ptprb", "Tnnt2", "Msln", "Rgs5", "Ppbp"), ncol = 4)
+FeaturePlot(EAM_integrated, features = c("Cd3e", "Ms4a1", "Col1a1", "Cxcl2", "Mki67", "Nkg7", "Ptprb", "Tnnt2", "Msln", "Rgs5", "Ppbp"), ncol = 4)
 ```
 
 ```{r FeatPlot_markers_fibro, fig.width=15, fig.height=10}
@@ -460,8 +460,16 @@ FeaturePlot(subset(EAM_integrated, cell_type == "Fibroblasts"), features = c("Ac
 FeaturePlot(subset(EAM_integrated, cell_type == "Fibroblasts"), features = c("Acta2"), split.by = "Group", ncol = 3)
 ```
 
+```{r FeatPlot_Postn_Group, fig.width=15, fig.height=5}
+FeaturePlot(subset(EAM_integrated, cell_type == "Fibroblasts"), features = c("Postn"), split.by = "Group", ncol = 3)
+```
+
 ```{r FeatPlot_Acta2_Sample, fig.width=15, fig.height=15}
 FeaturePlot(subset(EAM_integrated, cell_type == "Fibroblasts"), features = c("Acta2"), split.by = "Sample") + plot_layout(ncol = 3, nrow = 3)
+```
+
+```{r FeatPlot_Postn_Sample, fig.width=15, fig.height=15}
+FeaturePlot(subset(EAM_integrated, cell_type == "Fibroblasts"), features = c("Postn"), split.by = "Sample") + plot_layout(ncol = 3, nrow = 3)
 ```
 
 ```{r save EAM_integrated final, eval = FALSE}
