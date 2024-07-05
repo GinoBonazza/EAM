@@ -10,6 +10,8 @@ navbar:
     menu:
       - text: "QC, integration, annotation"
         href: QC_integration_annotation.html
+      - text: "Fibroblasts subclustering"
+        href: Fibroblasts_subclustering.html
   - text: About
     href: about.html
   - text: License
