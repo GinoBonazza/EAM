@@ -183,10 +183,14 @@ DefaultAssay(FB) <- "RNA"
 Idents(FB) <- "cell_state"
 Markers <- FindAllMarkers(FB, only.pos = TRUE, min.pct = 0.5, logfc.threshold = 0.5)
 write.csv(Markers, here::here(output_dir_data, "EAM_Markers_all_cell_state.csv"))
+Markers_top25 <- as.data.frame(Markers %>% group_by(cluster) %>% top_n(n = 25, wt = avg_log2FC))
+write.csv(Markers_top25, here::here(output_dir_data, "EAM_Markers_top25_cell_state.csv"))
 Markers_top10 <- as.data.frame(Markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_log2FC))
 write.csv(Markers_top10, here::here(output_dir_data, "EAM_Markers_top10_cell_state.csv"))
 Markers_top3 <- as.data.frame(Markers %>% group_by(cluster) %>% top_n(n = 3, wt = avg_log2FC))
 write.csv(Markers_top3, here::here(output_dir_data, "EAM_Markers_top3_cell_state.csv"))
+Markers_FB3 <- as.data.frame(Markers %>% group_by(cluster) %>% dplyr::filter(cluster == "FB3"))
+write.csv(Markers_FB3, here::here(output_dir_data, "EAM_Markers_FB3.csv"))
 ```
 
 ```{r Heatmap_cell_state, fig.width=12, fig.height=8}
@@ -217,6 +221,10 @@ DotPlot(FB, assay = "RNA", features = rev(Markers_top3$gene), dot.scale = 5, clu
 
 ```{r VlnPlot_markers_fibro, fig.width=12, fig.height=8}
 VlnPlot(FB, features = c("Acta2", "Col1a1", "Col3a1", "Postn", "Vim", "Fn1"), ncol = 3)
+```
+
+```{r VlnPlot_markers_fibro_2, fig.width=8, fig.height=8}
+VlnPlot(FB, features = c("Cthrc1", "Tnc", "Spp1", "Timp1"), ncol = 2)
 ```
 
 ```{r FeatPlot_markers_fibro, fig.width=15, fig.height=10}
@@ -271,6 +279,19 @@ color_palette_all <- c("#F8766D", "#00C1AB", "#24B700", "#E18A00", "#00ACFC", "#
 color_palette <- c("#F8766D", "#24B700", "#00ACFC")
 
 props <- getTransformedProps(FB$Phase, FB$cell_state, transform="logit")
+
+par(mar = c(5, 5, 3, 11), xpd = TRUE)
+barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = color_palette, 
+        cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
+legend("topright", inset = c(-0.35, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = "n", cex = 2)
+```
+
+```{r Barplot_FB_Cell_state, fig.height=6, fig.width=8, message=FALSE}
+color_palette_all <- c("#F8766D", "#00C1AB", "#24B700", "#E18A00", "#00ACFC", "#D575FE", "#BE9C00", "#00BE70", 
+                   "#8CAB00", "#00BBDA", "#FF65AC", "#8B93FF", "#EA8331")
+color_palette <- c("#F8766D", "#24B700", "#00ACFC", "#E18A00", "#D575FE")
+
+props <- getTransformedProps(FB$cell_state, FB$Group, transform="logit")
 
 par(mar = c(5, 5, 3, 11), xpd = TRUE)
 barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = color_palette, 
