@@ -346,6 +346,9 @@ div.tocify {
     <li>
       <a href="QC_integration_annotation.html">QC, integration, annotation</a>
     </li>
+    <li>
+      <a href="Fibroblasts_subclustering.html">Fibroblasts subclustering</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -376,7 +379,7 @@ div.tocify {
 <h4 class="author">GinoBonazza (<a
 href="mailto:ginoandrea.bonazza@usz.ch"
 class="email">ginoandrea.bonazza@usz.ch</a>)</h4>
-<h4 class="date">05 July, 2024</h4>
+<h4 class="date">16 July, 2024</h4>
 
 </div>
 
@@ -405,7 +408,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-07-05
+<strong>Last updated:</strong> 2024-07-16
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -536,15 +539,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomGinoBonazzaEAMtreeb19d2329f60467556f0a5d88e9f03666c29b7405targetblankb19d232a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomGinoBonazzaEAMtree4c5e6df818a7fcf4887e959cd1ae8eaf3ef49648targetblank4c5e6dfa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/GinoBonazza/EAM/tree/b19d2329f60467556f0a5d88e9f03666c29b7405" target="_blank">b19d232</a>
+<a href="https://github.com/GinoBonazza/EAM/tree/4c5e6df818a7fcf4887e959cd1ae8eaf3ef49648" target="_blank">4c5e6df</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomGinoBonazzaEAMtreeb19d2329f60467556f0a5d88e9f03666c29b7405targetblankb19d232a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomGinoBonazzaEAMtree4c5e6df818a7fcf4887e959cd1ae8eaf3ef49648targetblank4c5e6dfa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -554,7 +557,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/GinoBonazza/EAM/tree/b19d2329f60467556f0a5d88e9f03666c29b7405" target="_blank">b19d232</a>.
+<a href="https://github.com/GinoBonazza/EAM/tree/4c5e6df818a7fcf4887e959cd1ae8eaf3ef49648" target="_blank">4c5e6df</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -633,6 +636,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/4c5e6df818a7fcf4887e959cd1ae8eaf3ef49648/analysis/Fibroblasts_subclustering.Rmd" target="_blank">4c5e6df</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-16
+</td>
+<td>
+wflow_publish("analysis/Fibroblasts_subclustering.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/GinoBonazza/EAM/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/Fibroblasts_subclustering.html" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -724,6 +761,43 @@ FB &lt;- FB %&gt;%
 <pre class="r"><code>FB &lt;- readRDS(here::here(output_dir_data, &quot;FB.rds&quot;))</code></pre>
 <pre class="r"><code>ElbowPlot(FB, ndims = 50)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Elbow_FB-1.png" width="2400" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Elbow_FB-1">
+Past versions of Elbow_FB-1.png
+</button>
+</p>
+<div id="fig-Elbow_FB-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Elbow_FB-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Reintegrate the samples using Harmony</p>
 <pre class="r"><code>FB &lt;- RunHarmony(FB, assay.use=&quot;RNA&quot;, group.by.vars = &quot;Sample&quot;, dims.use = 1:50)</code></pre>
 <p>Clustering</p>
@@ -733,9 +807,83 @@ FB &lt;- FindClusters(FB, resolution = seq(0.1, 0.8, by=0.1))</code></pre>
 <pre class="r"><code>clustree::clustree(FB@meta.data[,grep(&quot;RNA_snn_res&quot;, colnames(FB@meta.data))],
                    prefix = &quot;RNA_snn_res.&quot;)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Clustree_FB-1.png" width="3600" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Clustree_FB-1">
+Past versions of Clustree_FB-1.png
+</button>
+</p>
+<div id="fig-Clustree_FB-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Clustree_FB-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(FB, reduction = &quot;umap&quot;, shuffle = T,
         group.by = c(&quot;RNA_snn_res.0.1&quot;, &quot;Sample&quot;, &quot;Group&quot;), ncol = 3)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/UMAPs_FB-1.png" width="8400" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-UMAPs_FB-1">
+Past versions of UMAPs_FB-1.png
+</button>
+</p>
+<div id="fig-UMAPs_FB-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/UMAPs_FB-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Find the markers that characterize each cell population</p>
 <pre class="r"><code>DefaultAssay(FB) &lt;- &quot;RNA&quot;
 Idents(FB) &lt;- &quot;RNA_snn_res.0.1&quot;
@@ -754,10 +902,84 @@ Heatmap &lt;- DoHeatmap(FB, draw.line = F, features = Markers_top10$gene) +
                            &quot;inches&quot;))
 Heatmap</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Heatmap_FB-1.png" width="9000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Heatmap_FB-1">
+Past versions of Heatmap_FB-1.png
+</button>
+</p>
+<div id="fig-Heatmap_FB-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Heatmap_FB-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Check cell cycle genes</p>
 <pre class="r"><code>DimPlot(FB, reduction = &quot;umap&quot;, shuffle = T,
         group.by = &quot;Phase&quot;)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Cell_cycle_FB-1.png" width="3000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Cell_cycle_FB-1">
+Past versions of Cell_cycle_FB-1.png
+</button>
+</p>
+<div id="fig-Cell_cycle_FB-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Cell_cycle_FB-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="cell-type-annotation" class="section level2">
 <h2>Cell type annotation</h2>
@@ -774,10 +996,14 @@ Idents(FB) &lt;- FB$cell_state</code></pre>
 Idents(FB) &lt;- &quot;cell_state&quot;
 Markers &lt;- FindAllMarkers(FB, only.pos = TRUE, min.pct = 0.5, logfc.threshold = 0.5)
 write.csv(Markers, here::here(output_dir_data, &quot;EAM_Markers_all_cell_state.csv&quot;))
+Markers_top25 &lt;- as.data.frame(Markers %&gt;% group_by(cluster) %&gt;% top_n(n = 25, wt = avg_log2FC))
+write.csv(Markers_top25, here::here(output_dir_data, &quot;EAM_Markers_top25_cell_state.csv&quot;))
 Markers_top10 &lt;- as.data.frame(Markers %&gt;% group_by(cluster) %&gt;% top_n(n = 10, wt = avg_log2FC))
 write.csv(Markers_top10, here::here(output_dir_data, &quot;EAM_Markers_top10_cell_state.csv&quot;))
 Markers_top3 &lt;- as.data.frame(Markers %&gt;% group_by(cluster) %&gt;% top_n(n = 3, wt = avg_log2FC))
-write.csv(Markers_top3, here::here(output_dir_data, &quot;EAM_Markers_top3_cell_state.csv&quot;))</code></pre>
+write.csv(Markers_top3, here::here(output_dir_data, &quot;EAM_Markers_top3_cell_state.csv&quot;))
+Markers_FB3 &lt;- as.data.frame(Markers %&gt;% group_by(cluster) %&gt;% dplyr::filter(cluster == &quot;FB3&quot;))
+write.csv(Markers_FB3, here::here(output_dir_data, &quot;EAM_Markers_FB3.csv&quot;))</code></pre>
 <pre class="r"><code>Heatmap &lt;- DoHeatmap(FB, label = FALSE, draw.line = F, features = Markers_top10$gene) + 
   scale_fill_gradientn(colours = mapal) +
   theme(text = element_text(size = 12), 
@@ -786,30 +1012,365 @@ write.csv(Markers_top3, here::here(output_dir_data, &quot;EAM_Markers_top3_cell_
   guides(fill = guide_colorbar(barwidth = 1, barheight = 4))
 Heatmap</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Heatmap_cell_state-1.png" width="7200" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Heatmap_cell_state-1">
+Past versions of Heatmap_cell_state-1.png
+</button>
+</p>
+<div id="fig-Heatmap_cell_state-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Heatmap_cell_state-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>p &lt;- DimPlot(FB, group.by = &quot;cell_state&quot;, reduction = &quot;umap&quot;, label = F) + 
   NoLegend() + 
   theme(axis.text=element_text(size=10, face = &quot;bold&quot;), axis.title = element_text(size = 14, face = &quot;bold&quot;)) + 
   theme(plot.title = element_blank())
 LabelClusters(p, id = &quot;cell_state&quot;, fontface = &quot;bold&quot;, size = 7, repel = T)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/UMAP_cell_state-1.png" width="3900" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-UMAP_cell_state-1">
+Past versions of UMAP_cell_state-1.png
+</button>
+</p>
+<div id="fig-UMAP_cell_state-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/UMAP_cell_state-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DotPlot(FB, assay = &quot;RNA&quot;, features = rev(Markers_top3$gene), dot.scale = 5, cluster.idents = FALSE) +
   RotatedAxis() +
   coord_flip() +
   theme(axis.title = element_blank(), axis.text.x = element_text(size = 14), axis.text.y = element_text(size = 13), legend.text = element_text(size = 9), legend.title = element_text(size = 11), plot.margin = unit(c(0, 0, 0, 0.1), 
                            &quot;inches&quot;))</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/DotPlot_markers-1.png" width="3600" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-DotPlot_markers-1">
+Past versions of DotPlot_markers-1.png
+</button>
+</p>
+<div id="fig-DotPlot_markers-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/DotPlot_markers-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(FB, features = c(&quot;Acta2&quot;, &quot;Col1a1&quot;, &quot;Col3a1&quot;, &quot;Postn&quot;, &quot;Vim&quot;, &quot;Fn1&quot;), ncol = 3)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/VlnPlot_markers_fibro-1.png" width="7200" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-VlnPlot_markers_fibro-1">
+Past versions of VlnPlot_markers_fibro-1.png
+</button>
+</p>
+<div id="fig-VlnPlot_markers_fibro-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/VlnPlot_markers_fibro-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>VlnPlot(FB, features = c(&quot;Cthrc1&quot;, &quot;Tnc&quot;, &quot;Spp1&quot;, &quot;Timp1&quot;), ncol = 2)</code></pre>
+<p><img src="figure/Fibroblasts_subclustering.Rmd/VlnPlot_markers_fibro_2-1.png" width="4800" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>FeaturePlot(FB, features = c(&quot;Acta2&quot;, &quot;Col1a1&quot;, &quot;Col3a1&quot;, &quot;Postn&quot;, &quot;Vim&quot;, &quot;Fn1&quot;), ncol = 3)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/FeatPlot_markers_fibro-1.png" width="9000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-FeatPlot_markers_fibro-1">
+Past versions of FeatPlot_markers_fibro-1.png
+</button>
+</p>
+<div id="fig-FeatPlot_markers_fibro-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/FeatPlot_markers_fibro-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(FB, features = c(&quot;Acta2&quot;), split.by = &quot;Group&quot;, ncol = 3)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/FeatPlot_Acta2_Group-1.png" width="9000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-FeatPlot_Acta2_Group-1">
+Past versions of FeatPlot_Acta2_Group-1.png
+</button>
+</p>
+<div id="fig-FeatPlot_Acta2_Group-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/FeatPlot_Acta2_Group-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(FB, features = c(&quot;Postn&quot;), split.by = &quot;Group&quot;, ncol = 3)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/FeatPlot_Postn_Group-1.png" width="9000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-FeatPlot_Postn_Group-1">
+Past versions of FeatPlot_Postn_Group-1.png
+</button>
+</p>
+<div id="fig-FeatPlot_Postn_Group-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/FeatPlot_Postn_Group-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(FB, features = c(&quot;Acta2&quot;), split.by = &quot;Sample&quot;) + plot_layout(ncol = 3, nrow = 3)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/FeatPlot_Acta2_Sample-1.png" width="9000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-FeatPlot_Acta2_Sample-1">
+Past versions of FeatPlot_Acta2_Sample-1.png
+</button>
+</p>
+<div id="fig-FeatPlot_Acta2_Sample-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/FeatPlot_Acta2_Sample-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(FB, features = c(&quot;Postn&quot;), split.by = &quot;Sample&quot;) + plot_layout(ncol = 3, nrow = 3)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/FeatPlot_Postn_Sample-1.png" width="9000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-FeatPlot_Postn_Sample-1">
+Past versions of FeatPlot_Postn_Sample-1.png
+</button>
+</p>
+<div id="fig-FeatPlot_Postn_Sample-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/FeatPlot_Postn_Sample-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>color_palette_all &lt;- c(&quot;#F8766D&quot;, &quot;#00C1AB&quot;, &quot;#24B700&quot;, &quot;#E18A00&quot;, &quot;#00ACFC&quot;, &quot;#D575FE&quot;, &quot;#BE9C00&quot;, &quot;#00BE70&quot;, 
                    &quot;#8CAB00&quot;, &quot;#00BBDA&quot;, &quot;#FF65AC&quot;, &quot;#8B93FF&quot;, &quot;#EA8331&quot;)
 color_palette &lt;- c(&quot;#F8766D&quot;, &quot;#00C1AB&quot;, &quot;#24B700&quot;, &quot;#E18A00&quot;, &quot;#00ACFC&quot;, &quot;#D575FE&quot;, &quot;#BE9C00&quot;)
@@ -821,6 +1382,43 @@ barplot(props$Proportions, legend = FALSE, ylab = &quot;Proportions&quot;, col =
         cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
 legend(&quot;topright&quot;, inset = c(-0.4, 0.1), legend = rownames(props$Proportions), fill = color_palette, bty = &quot;n&quot;, cex = 2)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Sample-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Barplot_FB_Sample-1">
+Past versions of Barplot_FB_Sample-1.png
+</button>
+</p>
+<div id="fig-Barplot_FB_Sample-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Sample-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>color_palette_all &lt;- c(&quot;#F8766D&quot;, &quot;#00C1AB&quot;, &quot;#24B700&quot;, &quot;#E18A00&quot;, &quot;#00ACFC&quot;, &quot;#D575FE&quot;, &quot;#BE9C00&quot;, &quot;#00BE70&quot;, 
                    &quot;#8CAB00&quot;, &quot;#00BBDA&quot;, &quot;#FF65AC&quot;, &quot;#8B93FF&quot;, &quot;#EA8331&quot;)
 color_palette &lt;- c(&quot;#F8766D&quot;, &quot;#24B700&quot;, &quot;#00ACFC&quot;)
@@ -832,6 +1430,43 @@ barplot(props$Proportions, legend = FALSE, ylab = &quot;Proportions&quot;, col =
         cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
 legend(&quot;topright&quot;, inset = c(-0.32, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = &quot;n&quot;, cex = 2)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Group-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Barplot_FB_Group-1">
+Past versions of Barplot_FB_Group-1.png
+</button>
+</p>
+<div id="fig-Barplot_FB_Group-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Group-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>color_palette_all &lt;- c(&quot;#F8766D&quot;, &quot;#00C1AB&quot;, &quot;#24B700&quot;, &quot;#E18A00&quot;, &quot;#00ACFC&quot;, &quot;#D575FE&quot;, &quot;#BE9C00&quot;, &quot;#00BE70&quot;, 
                    &quot;#8CAB00&quot;, &quot;#00BBDA&quot;, &quot;#FF65AC&quot;, &quot;#8B93FF&quot;, &quot;#EA8331&quot;)
 color_palette &lt;- c(&quot;#F8766D&quot;, &quot;#24B700&quot;, &quot;#00ACFC&quot;)
@@ -843,6 +1478,54 @@ barplot(props$Proportions, legend = FALSE, ylab = &quot;Proportions&quot;, col =
         cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
 legend(&quot;topright&quot;, inset = c(-0.35, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = &quot;n&quot;, cex = 2)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Cell_cycle-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Barplot_FB_Cell_cycle-1">
+Past versions of Barplot_FB_Cell_cycle-1.png
+</button>
+</p>
+<div id="fig-Barplot_FB_Cell_cycle-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Cell_cycle-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>color_palette_all &lt;- c(&quot;#F8766D&quot;, &quot;#00C1AB&quot;, &quot;#24B700&quot;, &quot;#E18A00&quot;, &quot;#00ACFC&quot;, &quot;#D575FE&quot;, &quot;#BE9C00&quot;, &quot;#00BE70&quot;, 
+                   &quot;#8CAB00&quot;, &quot;#00BBDA&quot;, &quot;#FF65AC&quot;, &quot;#8B93FF&quot;, &quot;#EA8331&quot;)
+color_palette &lt;- c(&quot;#F8766D&quot;, &quot;#24B700&quot;, &quot;#00ACFC&quot;, &quot;#E18A00&quot;, &quot;#D575FE&quot;)
+
+props &lt;- getTransformedProps(FB$cell_state, FB$Group, transform=&quot;logit&quot;)
+
+par(mar = c(5, 5, 3, 11), xpd = TRUE)
+barplot(props$Proportions, legend = FALSE, ylab = &quot;Proportions&quot;, col = color_palette, 
+        cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
+legend(&quot;topright&quot;, inset = c(-0.35, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = &quot;n&quot;, cex = 2)</code></pre>
+<p><img src="figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Cell_state-1.png" width="4800" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>df &lt;- Markers[,7:6]
 dfsample &lt;- split(df$gene,df$cluster)
 length(dfsample)</code></pre>
@@ -873,6 +1556,43 @@ universe_entrez &lt;- bitr(universe_genes, fromType = &quot;SYMBOL&quot;, toType
 GO_MF &lt;- gsfilter(GO_MF, by = &#39;Count&#39;, min = 3)
 dotplot(GO_MF, label_format = 35, title = &quot;GO - Molecular Function&quot;)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Pathways_GO_MF-1.png" width="3600" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Pathways_GO_MF-1">
+Past versions of Pathways_GO_MF-1.png
+</button>
+</p>
+<div id="fig-Pathways_GO_MF-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Pathways_GO_MF-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>GO_MF_simplified &lt;- simplify(
   GO_MF,
   cutoff = 0.5,
@@ -883,10 +1603,84 @@ dotplot(GO_MF, label_format = 35, title = &quot;GO - Molecular Function&quot;)</
 )
 dotplot(GO_MF_simplified, label_format = 35, title = &quot;GO - Molecular Function&quot;)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Pathways_GO_MF_simplified-1.png" width="3600" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Pathways_GO_MF_simplified-1">
+Past versions of Pathways_GO_MF_simplified-1.png
+</button>
+</p>
+<div id="fig-Pathways_GO_MF_simplified-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Pathways_GO_MF_simplified-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>GO_BP &lt;- compareCluster(geneCluster = genelist, fun = &quot;enrichGO&quot;, ont = &quot;BP&quot;, OrgDb = &quot;org.Mm.eg.db&quot;, universe = universe_entrez)
 GO_BP &lt;- gsfilter(GO_BP, by = &#39;Count&#39;, min = 3)
 dotplot(GO_BP, label_format = 35, title = &quot;GO - Biological process&quot;)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Pathways_GO_BP-1.png" width="3600" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Pathways_GO_BP-1">
+Past versions of Pathways_GO_BP-1.png
+</button>
+</p>
+<div id="fig-Pathways_GO_BP-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Pathways_GO_BP-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>GO_BP_simplified &lt;- simplify(
   GO_BP,
   cutoff = 0.5,
@@ -897,14 +1691,125 @@ dotplot(GO_BP, label_format = 35, title = &quot;GO - Biological process&quot;)</
 )
 dotplot(GO_BP_simplified, label_format = 35, title = &quot;GO - Biological process&quot;)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Pathways_GO_BP_simplified-1.png" width="3600" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Pathways_GO_BP_simplified-1">
+Past versions of Pathways_GO_BP_simplified-1.png
+</button>
+</p>
+<div id="fig-Pathways_GO_BP_simplified-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Pathways_GO_BP_simplified-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>KEGG &lt;- compareCluster(geneCluster = genelist, fun = &quot;enrichKEGG&quot;, organism = &#39;mmu&#39;, universe = universe_entrez)
 KEGG &lt;- gsfilter(KEGG, by = &#39;Count&#39;, min = 3)
 dotplot(KEGG, label_format = 35, title = &quot;KEGG Pathways&quot;)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Pathways_KEGG-1.png" width="3600" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Pathways_KEGG-1">
+Past versions of Pathways_KEGG-1.png
+</button>
+</p>
+<div id="fig-Pathways_KEGG-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Pathways_KEGG-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>REACTOME &lt;- compareCluster(geneCluster = genelist, fun = &quot;enrichPathway&quot;, organism = &#39;mouse&#39;, universe = universe_entrez)
 REACTOME &lt;- gsfilter(REACTOME, by = &#39;Count&#39;, min = 3)
 dotplot(REACTOME, label_format = 40, title = &quot;REACTOME&quot;, showCategory = 4)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Pathways_REACTOME-1.png" width="3600" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Pathways_REACTOME-1">
+Past versions of Pathways_REACTOME-1.png
+</button>
+</p>
+<div id="fig-Pathways_REACTOME-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Pathways_REACTOME-1.png" target="_blank">03b0d69</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>saveRDS(FB, 
         here::here(output_dir_data, &quot;FB.rds&quot;))</code></pre>
 <br>
