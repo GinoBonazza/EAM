@@ -539,15 +539,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomGinoBonazzaEAMtree4c5e6df818a7fcf4887e959cd1ae8eaf3ef49648targetblank4c5e6dfa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomGinoBonazzaEAMtree018fbd2d81665bbd4ba13f84617a8521e4d104b3targetblank018fbd2a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/GinoBonazza/EAM/tree/4c5e6df818a7fcf4887e959cd1ae8eaf3ef49648" target="_blank">4c5e6df</a>
+<a href="https://github.com/GinoBonazza/EAM/tree/018fbd2d81665bbd4ba13f84617a8521e4d104b3" target="_blank">018fbd2</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomGinoBonazzaEAMtree4c5e6df818a7fcf4887e959cd1ae8eaf3ef49648targetblank4c5e6dfa"
+id="strongRepositoryversionstrongahrefhttpsgithubcomGinoBonazzaEAMtree018fbd2d81665bbd4ba13f84617a8521e4d104b3targetblank018fbd2a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -557,7 +557,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/GinoBonazza/EAM/tree/4c5e6df818a7fcf4887e959cd1ae8eaf3ef49648" target="_blank">4c5e6df</a>.
+<a href="https://github.com/GinoBonazza/EAM/tree/018fbd2d81665bbd4ba13f84617a8521e4d104b3" target="_blank">018fbd2</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -578,6 +578,7 @@ Ignored files:
 Untracked files:
     Untracked:  code/FB subcluster.R
     Untracked:  code/QC_integration_annotation_2.Rmd
+    Untracked:  core
     Untracked:  data/EAM35/
     Untracked:  data/EAM35c/
     Untracked:  data/EAMd0/
@@ -636,6 +637,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/018fbd2d81665bbd4ba13f84617a8521e4d104b3/analysis/Fibroblasts_subclustering.Rmd" target="_blank">018fbd2</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-16
+</td>
+<td>
+wflow_publish("analysis/Fibroblasts_subclustering.Rmd", republish = T)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/GinoBonazza/EAM/d169d9ed30070083f721c76e8f91546ce9540f16/docs/Fibroblasts_subclustering.html" target="_blank">d169d9e</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1174,8 +1209,45 @@ GinoBonazza
 </table>
 </div>
 </div>
-<pre class="r"><code>VlnPlot(FB, features = c(&quot;Cthrc1&quot;, &quot;Tnc&quot;, &quot;Spp1&quot;, &quot;Timp1&quot;), ncol = 2)</code></pre>
-<p><img src="figure/Fibroblasts_subclustering.Rmd/VlnPlot_markers_fibro_2-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(FB, features = c(&quot;Cthrc1&quot;, &quot;Tnc&quot;, &quot;Spp1&quot;, &quot;Timp1&quot;, &quot;Tpm2&quot;, &quot;Tagln2&quot;, &quot;Actg1&quot;, &quot;Actb&quot;), ncol = 4)</code></pre>
+<p><img src="figure/Fibroblasts_subclustering.Rmd/VlnPlot_markers_fibro_2-1.png" width="9600" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-VlnPlot_markers_fibro_2-1">
+Past versions of VlnPlot_markers_fibro_2-1.png
+</button>
+</p>
+<div id="fig-VlnPlot_markers_fibro_2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/d169d9ed30070083f721c76e8f91546ce9540f16/docs/figure/Fibroblasts_subclustering.Rmd/VlnPlot_markers_fibro_2-1.png" target="_blank">d169d9e</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(FB, features = c(&quot;Acta2&quot;, &quot;Col1a1&quot;, &quot;Col3a1&quot;, &quot;Postn&quot;, &quot;Vim&quot;, &quot;Fn1&quot;), ncol = 3)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/FeatPlot_markers_fibro-1.png" width="9000" style="display: block; margin: auto;" /></p>
 <p>
@@ -1526,6 +1598,43 @@ barplot(props$Proportions, legend = FALSE, ylab = &quot;Proportions&quot;, col =
         cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
 legend(&quot;topright&quot;, inset = c(-0.35, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = &quot;n&quot;, cex = 2)</code></pre>
 <p><img src="figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Cell_state-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Barplot_FB_Cell_state-1">
+Past versions of Barplot_FB_Cell_state-1.png
+</button>
+</p>
+<div id="fig-Barplot_FB_Cell_state-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/d169d9ed30070083f721c76e8f91546ce9540f16/docs/figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Cell_state-1.png" target="_blank">d169d9e</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>df &lt;- Markers[,7:6]
 dfsample &lt;- split(df$gene,df$cluster)
 length(dfsample)</code></pre>
