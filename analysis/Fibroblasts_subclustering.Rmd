@@ -223,8 +223,8 @@ DotPlot(FB, assay = "RNA", features = rev(Markers_top3$gene), dot.scale = 5, clu
 VlnPlot(FB, features = c("Acta2", "Col1a1", "Col3a1", "Postn", "Vim", "Fn1"), ncol = 3)
 ```
 
-```{r VlnPlot_markers_fibro_2, fig.width=8, fig.height=8}
-VlnPlot(FB, features = c("Cthrc1", "Tnc", "Spp1", "Timp1"), ncol = 2)
+```{r VlnPlot_markers_fibro_2, fig.width=16, fig.height=8}
+VlnPlot(FB, features = c("Cthrc1", "Tnc", "Spp1", "Timp1", "Tpm2", "Tagln2", "Actg1", "Actb"), ncol = 4)
 ```
 
 ```{r FeatPlot_markers_fibro, fig.width=15, fig.height=10}
