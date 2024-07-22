@@ -247,6 +247,14 @@ FeaturePlot(FB, features = c("Acta2"), split.by = "Sample") + plot_layout(ncol =
 FeaturePlot(FB, features = c("Postn"), split.by = "Sample") + plot_layout(ncol = 3, nrow = 3)
 ```
 
+```{r VlnPlot_Acta2_FB3_4, fig.width=6, fig.height=4}
+VlnPlot(FB, features = "Acta2", idents = c("FB3", "FB4"), group.by = "cell_state", split.by = "Group") + theme(axis.title.x = element_blank()) 
+```
+
+```{r VlnPlot_FB3_markers, fig.width=10, fig.height=6}
+VlnPlot(FB, features = c("Acta2", "Col1a1", "Col3a1", "Postn", "Vim", "Fn1"), idents = c("FB3"), group.by = "cell_state", split.by = "Group") + theme(axis.title.x = element_blank()) 
+```
+
 ```{r Barplot_FB_Sample, fig.height=6, fig.width=8, message=FALSE}
 color_palette_all <- c("#F8766D", "#00C1AB", "#24B700", "#E18A00", "#00ACFC", "#D575FE", "#BE9C00", "#00BE70", 
                    "#8CAB00", "#00BBDA", "#FF65AC", "#8B93FF", "#EA8331")
@@ -273,12 +281,26 @@ barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = color_pal
 legend("topright", inset = c(-0.32, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = "n", cex = 2)
 ```
 
-```{r Barplot_FB_Cell_cycle, fig.height=6, fig.width=8, message=FALSE}
+```{r Barplot_FB_Cell_cycle_cell_state, fig.height=6, fig.width=8, message=FALSE}
 color_palette_all <- c("#F8766D", "#00C1AB", "#24B700", "#E18A00", "#00ACFC", "#D575FE", "#BE9C00", "#00BE70", 
                    "#8CAB00", "#00BBDA", "#FF65AC", "#8B93FF", "#EA8331")
 color_palette <- c("#F8766D", "#24B700", "#00ACFC")
 
 props <- getTransformedProps(FB$Phase, FB$cell_state, transform="logit")
+
+par(mar = c(5, 5, 3, 11), xpd = TRUE)
+barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = color_palette, 
+        cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
+legend("topright", inset = c(-0.35, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = "n", cex = 2)
+```
+
+```{r Barplot_FB_Cell_cycle_group, fig.height=6, fig.width=8, message=FALSE}
+color_palette_all <- c("#F8766D", "#00C1AB", "#24B700", "#E18A00", "#00ACFC", "#D575FE", "#BE9C00", "#00BE70", 
+                   "#8CAB00", "#00BBDA", "#FF65AC", "#8B93FF", "#EA8331")
+color_palette <- c("#F8766D", "#24B700", "#00ACFC")
+FB3 <- subset(FB, cell_state == "FB3")
+
+props <- getTransformedProps(FB3$Phase, FB3$Group, transform="logit")
 
 par(mar = c(5, 5, 3, 11), xpd = TRUE)
 barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = color_palette, 
