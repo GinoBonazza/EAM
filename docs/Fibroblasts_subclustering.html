@@ -379,7 +379,7 @@ div.tocify {
 <h4 class="author">GinoBonazza (<a
 href="mailto:ginoandrea.bonazza@usz.ch"
 class="email">ginoandrea.bonazza@usz.ch</a>)</h4>
-<h4 class="date">16 July, 2024</h4>
+<h4 class="date">22 July, 2024</h4>
 
 </div>
 
@@ -408,7 +408,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-07-16
+<strong>Last updated:</strong> 2024-07-22
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -539,15 +539,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomGinoBonazzaEAMtree018fbd2d81665bbd4ba13f84617a8521e4d104b3targetblank018fbd2a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomGinoBonazzaEAMtreee9442d02b9ad6c66b7e4e1d036a8ee635c0df09ctargetblanke9442d0a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/GinoBonazza/EAM/tree/018fbd2d81665bbd4ba13f84617a8521e4d104b3" target="_blank">018fbd2</a>
+<a href="https://github.com/GinoBonazza/EAM/tree/e9442d02b9ad6c66b7e4e1d036a8ee635c0df09c" target="_blank">e9442d0</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomGinoBonazzaEAMtree018fbd2d81665bbd4ba13f84617a8521e4d104b3targetblank018fbd2a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomGinoBonazzaEAMtreee9442d02b9ad6c66b7e4e1d036a8ee635c0df09ctargetblanke9442d0a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -557,7 +557,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/GinoBonazza/EAM/tree/018fbd2d81665bbd4ba13f84617a8521e4d104b3" target="_blank">018fbd2</a>.
+<a href="https://github.com/GinoBonazza/EAM/tree/e9442d02b9ad6c66b7e4e1d036a8ee635c0df09c" target="_blank">e9442d0</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -574,6 +574,7 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
 
 Untracked files:
     Untracked:  code/FB subcluster.R
@@ -637,6 +638,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/GinoBonazza/EAM/blob/e9442d02b9ad6c66b7e4e1d036a8ee635c0df09c/analysis/Fibroblasts_subclustering.Rmd" target="_blank">e9442d0</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-22
+</td>
+<td>
+wflow_publish("analysis/Fibroblasts_subclustering.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/GinoBonazza/EAM/cdcfd6d87d24351955d9ce6434512f9ac093709a/docs/Fibroblasts_subclustering.html" target="_blank">cdcfd6d</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1235,6 +1270,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/GinoBonazza/EAM/blob/cdcfd6d87d24351955d9ce6434512f9ac093709a/docs/figure/Fibroblasts_subclustering.Rmd/VlnPlot_markers_fibro_2-1.png" target="_blank">cdcfd6d</a>
+</td>
+<td>
+GinoBonazza
+</td>
+<td>
+2024-07-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/GinoBonazza/EAM/blob/d169d9ed30070083f721c76e8f91546ce9540f16/docs/figure/Fibroblasts_subclustering.Rmd/VlnPlot_markers_fibro_2-1.png" target="_blank">d169d9e</a>
 </td>
 <td>
@@ -1443,6 +1489,10 @@ GinoBonazza
 </table>
 </div>
 </div>
+<pre class="r"><code>VlnPlot(FB, features = &quot;Acta2&quot;, idents = c(&quot;FB3&quot;, &quot;FB4&quot;), group.by = &quot;cell_state&quot;, split.by = &quot;Group&quot;) + theme(axis.title.x = element_blank()) </code></pre>
+<p><img src="figure/Fibroblasts_subclustering.Rmd/VlnPlot_Acta2_FB3_4-1.png" width="3600" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(FB, features = c(&quot;Acta2&quot;, &quot;Col1a1&quot;, &quot;Col3a1&quot;, &quot;Postn&quot;, &quot;Vim&quot;, &quot;Fn1&quot;), idents = c(&quot;FB3&quot;), group.by = &quot;cell_state&quot;, split.by = &quot;Group&quot;) + theme(axis.title.x = element_blank()) </code></pre>
+<p><img src="figure/Fibroblasts_subclustering.Rmd/VlnPlot_FB3_markers-1.png" width="6000" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>color_palette_all &lt;- c(&quot;#F8766D&quot;, &quot;#00C1AB&quot;, &quot;#24B700&quot;, &quot;#E18A00&quot;, &quot;#00ACFC&quot;, &quot;#D575FE&quot;, &quot;#BE9C00&quot;, &quot;#00BE70&quot;, 
                    &quot;#8CAB00&quot;, &quot;#00BBDA&quot;, &quot;#FF65AC&quot;, &quot;#8B93FF&quot;, &quot;#EA8331&quot;)
 color_palette &lt;- c(&quot;#F8766D&quot;, &quot;#00C1AB&quot;, &quot;#24B700&quot;, &quot;#E18A00&quot;, &quot;#00ACFC&quot;, &quot;#D575FE&quot;, &quot;#BE9C00&quot;)
@@ -1549,44 +1599,19 @@ par(mar = c(5, 5, 3, 11), xpd = TRUE)
 barplot(props$Proportions, legend = FALSE, ylab = &quot;Proportions&quot;, col = color_palette, 
         cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
 legend(&quot;topright&quot;, inset = c(-0.35, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = &quot;n&quot;, cex = 2)</code></pre>
-<p><img src="figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Cell_cycle-1.png" width="4800" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Barplot_FB_Cell_cycle-1">
-Past versions of Barplot_FB_Cell_cycle-1.png
-</button>
-</p>
-<div id="fig-Barplot_FB_Cell_cycle-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/GinoBonazza/EAM/blob/03b0d69518865c2cfc7dd5fa14f062da46a9a7e8/docs/figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Cell_cycle-1.png" target="_blank">03b0d69</a>
-</td>
-<td>
-GinoBonazza
-</td>
-<td>
-2024-07-05
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Cell_cycle_cell_state-1.png" width="4800" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>color_palette_all &lt;- c(&quot;#F8766D&quot;, &quot;#00C1AB&quot;, &quot;#24B700&quot;, &quot;#E18A00&quot;, &quot;#00ACFC&quot;, &quot;#D575FE&quot;, &quot;#BE9C00&quot;, &quot;#00BE70&quot;, 
+                   &quot;#8CAB00&quot;, &quot;#00BBDA&quot;, &quot;#FF65AC&quot;, &quot;#8B93FF&quot;, &quot;#EA8331&quot;)
+color_palette &lt;- c(&quot;#F8766D&quot;, &quot;#24B700&quot;, &quot;#00ACFC&quot;)
+FB3 &lt;- subset(FB, cell_state == &quot;FB3&quot;)
+
+props &lt;- getTransformedProps(FB3$Phase, FB3$Group, transform=&quot;logit&quot;)
+
+par(mar = c(5, 5, 3, 11), xpd = TRUE)
+barplot(props$Proportions, legend = FALSE, ylab = &quot;Proportions&quot;, col = color_palette, 
+        cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
+legend(&quot;topright&quot;, inset = c(-0.35, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = &quot;n&quot;, cex = 2)</code></pre>
+<p><img src="figure/Fibroblasts_subclustering.Rmd/Barplot_FB_Cell_cycle_group-1.png" width="4800" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>color_palette_all &lt;- c(&quot;#F8766D&quot;, &quot;#00C1AB&quot;, &quot;#24B700&quot;, &quot;#E18A00&quot;, &quot;#00ACFC&quot;, &quot;#D575FE&quot;, &quot;#BE9C00&quot;, &quot;#00BE70&quot;, 
                    &quot;#8CAB00&quot;, &quot;#00BBDA&quot;, &quot;#FF65AC&quot;, &quot;#8B93FF&quot;, &quot;#EA8331&quot;)
 color_palette &lt;- c(&quot;#F8766D&quot;, &quot;#24B700&quot;, &quot;#00ACFC&quot;, &quot;#E18A00&quot;, &quot;#D575FE&quot;)
