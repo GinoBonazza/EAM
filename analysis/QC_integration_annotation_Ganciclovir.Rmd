@@ -1,0 +1,561 @@
+---
+title: "QC, integration, annotation including Ganciclovir samples"
+author: "GinoBonazza (ginoandrea.bonazza@usz.ch)"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r knitr config, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(warning = FALSE)
+
+knitr::opts_chunk$set(message = FALSE)
+
+knitr::opts_chunk$set(cache = FALSE)
+
+knitr::opts_chunk$set(dpi = 300, fig.align = "center")
+```
+
+## Setup
+
+```{r setup, class.source = "fold-hide"}
+# Get current file name to make folder
+current_file <- "QC_integration_annotation_Ganciclovir"
+
+# Load libraries
+library(here)
+library(readr)
+library(readxl)
+library(xlsx)
+library(Seurat)
+library(DropletUtils)
+library(Matrix)
+library(scDblFinder)
+library(scCustomize)
+library(dplyr)
+library(ggplot2)
+library(magrittr)
+library(harmony)
+library(tidyverse)
+library(reshape2)
+library(S4Vectors)
+library(SingleCellExperiment)
+library(pheatmap)
+library(png)
+library(gridExtra)
+library(knitr)
+library(scales)
+library(RColorBrewer)
+library(Matrix.utils)
+library(tibble)
+library(ggplot2)
+library(scater)
+library(patchwork)
+library(statmod)
+library(ArchR)
+library(clustree)
+library(gprofiler2)
+library(speckle)
+
+#Output paths
+output_dir_data <- here::here("output", current_file)
+if (!dir.exists(output_dir_data)) dir.create(output_dir_data)
+
+if (!dir.exists(here::here("docs", "figure"))) dir.create(here::here("docs", "figure"))
+
+output_dir_figs <- here::here("docs", "figure", paste0(current_file, ".Rmd"))
+if (!dir.exists(output_dir_figs)) dir.create(output_dir_figs)
+```
+
+
+## Quality Control
+
+Load and merge cellranger output
+
+```{r echo = TRUE, results= "hide"}
+EAM_d0_1 <- Read10X(data.dir = here::here("data", "EAMd0"))
+EAM_d0_2 <- Read10X(data.dir = here::here("data", "EAMd0F"))
+EAM_d19_1 <- Read10X(data.dir = here::here("data", "EAMd19F"))
+EAM_d19_2 <- Read10X(data.dir = here::here("data", "EAMd19non_immuno"))
+EAM_d19_3 <- Read10X(data.dir = here::here("data", "EAMd19new"))
+EAM_d35_1 <- Read10X(data.dir = here::here("data", "EAM35"))
+EAM_d35_2 <- Read10X(data.dir = here::here("data", "EAM35c"))
+EAM_d35_G1 <- Read10X(data.dir = here::here("data", "G2"))
+EAM_d35_G2 <- Read10X(data.dir = here::here("data", "G3"))
+
+EAM_d0_1_seurat<- CreateSeuratObject(counts = EAM_d0_1, project = "EAM", min.cells = 3, min.features = 200)
+EAM_d0_1_seurat <- AddMetaData(object = EAM_d0_1_seurat, metadata = c("d0_1", "d0"), col.name = c("Sample", "Group"))
+EAM_d0_2_seurat<- CreateSeuratObject(counts = EAM_d0_2, project = "EAM", min.cells = 3, min.features = 200)
+EAM_d0_2_seurat <- AddMetaData(object = EAM_d0_2_seurat, metadata = c("d0_2", "d0"), col.name = c("Sample", "Group"))
+EAM_d19_1_seurat<- CreateSeuratObject(counts = EAM_d19_1, project = "EAM", min.cells = 3, min.features = 200)
+EAM_d19_1_seurat <- AddMetaData(object = EAM_d19_1_seurat, metadata = c("d19_1", "d19"), col.name = c("Sample", "Group"))
+EAM_d19_2_seurat<- CreateSeuratObject(counts = EAM_d19_2, project = "EAM", min.cells = 3, min.features = 200)
+EAM_d19_2_seurat <- AddMetaData(object = EAM_d19_2_seurat, metadata = c("d19_2", "d19"), col.name = c("Sample", "Group"))
+EAM_d19_3_seurat<- CreateSeuratObject(counts = EAM_d19_3, project = "EAM", min.cells = 3, min.features = 200)
+EAM_d19_3_seurat <- AddMetaData(object = EAM_d19_3_seurat, metadata = c("d19_3", "d19"), col.name = c("Sample", "Group"))
+EAM_d35_1_seurat<- CreateSeuratObject(counts = EAM_d35_1, project = "EAM", min.cells = 3, min.features = 200)
+EAM_d35_1_seurat <- AddMetaData(object = EAM_d35_1_seurat, metadata = c("d35_1", "d35"), col.name = c("Sample", "Group"))
+EAM_d35_2_seurat<- CreateSeuratObject(counts = EAM_d35_2, project = "EAM", min.cells = 3, min.features = 200)
+EAM_d35_2_seurat <- AddMetaData(object = EAM_d35_2_seurat, metadata = c("d35_2", "d35"), col.name = c("Sample", "Group"))
+EAM_d35_G1_seurat<- CreateSeuratObject(counts = EAM_d35_G1, project = "EAM", min.cells = 3, min.features = 200)
+EAM_d35_G1_seurat <- AddMetaData(object = EAM_d35_G1_seurat, metadata = c("d35_G1", "d35+G"), col.name = c("Sample", "Group"))
+EAM_d35_G2_seurat<- CreateSeuratObject(counts = EAM_d35_G2, project = "EAM", min.cells = 3, min.features = 200)
+EAM_d35_G2_seurat <- AddMetaData(object = EAM_d35_G2_seurat, metadata = c("d35_G2", "d35+G"), col.name = c("Sample", "Group"))
+
+rm(EAM_d0_1, EAM_d0_2, EAM_d19_1, EAM_d19_2, EAM_d19_3, EAM_d35_1, EAM_d35_2, EAM_d35_G1, EAM_d35_G2)
+
+EAM_preQC <- merge(EAM_d0_1_seurat, y = c(EAM_d0_2_seurat, EAM_d19_1_seurat, EAM_d19_2_seurat, EAM_d19_3_seurat, EAM_d35_1_seurat, EAM_d35_2_seurat, EAM_d35_G1_seurat, EAM_d35_G2_seurat), 
+                   add.cell.ids = c("EAM_d0_1", "EAM_d0_2", "EAM_d19_1", "EAM_d19_2", "EAM_d19_3", "EAM_d35_1", "EAM_d35_2", "EAM_d35_G1", "EAM_d35_G2"))
+rm(EAM_d0_1_seurat, EAM_d0_2_seurat, EAM_d19_1_seurat, EAM_d19_2_seurat, EAM_d19_3_seurat, EAM_d35_1_seurat, EAM_d35_2_seurat, EAM_d35_G1_seurat, EAM_d35_G2_seurat)
+```
+
+Add metadata: percentage of mitochondrial and ribosomal genes
+
+```{r}
+EAM_preQC[["percent.mt"]] <- PercentageFeatureSet(EAM_preQC, pattern = "^mt-")
+EAM_preQC[["percent.rp"]] <- PercentageFeatureSet(EAM_preQC, pattern = "^Rp[sl]")
+```
+
+Check quality control parameters
+
+```{r QC_pre_VlnPlots, fig.height=6, fig.width=8}
+p1 <- VlnPlot(EAM_preQC, features = "nCount_RNA", group.by = "Sample", pt.size = 0) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p2 <- VlnPlot(EAM_preQC, features = "nFeature_RNA", group.by = "Sample", pt.size = 0) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p3 <- VlnPlot(EAM_preQC, features = "percent.mt", group.by = "Sample", pt.size = 0) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p4 <- VlnPlot(EAM_preQC, features = "percent.rp", group.by = "Sample", pt.size = 0) + theme(axis.title.x = element_blank()) + NoLegend()
+
+QC_pre_VlnPlots <- p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
+
+QC_pre_VlnPlots
+```
+
+```{r QC_pre_VlnPlots_zoom, fig.height=10, fig.width=8}
+p1 <- VlnPlot(EAM_preQC, features = "nCount_RNA", group.by = "Sample", pt.size = 0, y.max = 20000) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p2 <- VlnPlot(EAM_preQC, features = "nFeature_RNA", group.by = "Sample", pt.size = 0, y.max = 5000) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p3 <- VlnPlot(EAM_preQC, features = "percent.mt", group.by = "Sample", pt.size = 0, y.max = 25) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p4 <- VlnPlot(EAM_preQC, features = "percent.rp", group.by = "Sample", pt.size = 0, y.max = 50) + theme(axis.title.x = element_blank()) + NoLegend()
+
+QC_pre_VlnPlots_zoom <- p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
+
+QC_pre_VlnPlots_zoom
+```
+
+Doublets detection
+
+```{r}
+EAM_preQC_sce <- as.SingleCellExperiment(EAM_preQC)
+EAM_preQC_sce <- scDblFinder(EAM_preQC_sce, samples="Sample", clusters = TRUE)
+table(EAM_preQC_sce@colData$scDblFinder.class)
+EAM_preQC <- as.Seurat(EAM_preQC_sce, counts = "counts", data = "logcounts")
+rm(EAM_preQC_sce)
+EAM_preQC@meta.data[EAM_preQC@meta.data$scDblFinder.class %in% "singlet", "scDblFinder.n"] = paste0("Singlets (n=", table(EAM_preQC$scDblFinder.class)[1], ")")
+EAM_preQC@meta.data[EAM_preQC@meta.data$scDblFinder.class %in% "doublet", "scDblFinder.n"] = paste0("Doublets (n=", table(EAM_preQC$scDblFinder.class)[2], ")")
+EAM_preQC$scDblFinder.n <- factor(x = EAM_preQC$scDblFinder.n, levels = c(rownames(table(EAM_preQC$scDblFinder.n))[2], rownames(table(EAM_preQC$scDblFinder.n))[1])) 
+```
+
+```{r QC_pre_Doublets, fig.height=3, fig.width=8}
+p1 <- VlnPlot(EAM_preQC, features = c("nCount_RNA"), split.by = "scDblFinder.n", group.by = "Sample", pt.size = 0, y.max = 50000) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p2 <- VlnPlot(EAM_preQC, features = c("nFeature_RNA"), split.by = "scDblFinder.n", group.by = "Sample", pt.size = 0, y.max = 10000) + theme(axis.title.x = element_blank()) 
+
+QC_pre_Doublets <- p1 + p2 + plot_layout(ncol = 2)
+
+QC_pre_Doublets
+```
+
+```{r eval=FALSE}
+saveRDS(EAM_preQC, 
+        here::here(output_dir_data, "EAM_preQC.rds"))
+```
+
+Remove doublets
+
+```{r EAM_preQC_no_doublets}
+EAM_preQC_no_doublets <- subset(x = EAM_preQC, subset = scDblFinder.class == "singlet")
+table(EAM_preQC_no_doublets@meta.data$scDblFinder.class)
+rm(EAM_preQC)
+```
+
+Check quality control parameters after removing doublets
+
+```{r QC_pre_no_doublets_VlnPlots, fig.height=6, fig.width=8}
+p1 <- VlnPlot(EAM_preQC_no_doublets, features = "nCount_RNA", group.by = "Sample", pt.size = 0) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p2 <- VlnPlot(EAM_preQC_no_doublets, features = "nFeature_RNA", group.by = "Sample", pt.size = 0) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p3 <- VlnPlot(EAM_preQC_no_doublets, features = "percent.mt", group.by = "Sample", pt.size = 0) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p4 <- VlnPlot(EAM_preQC_no_doublets, features = "percent.rp", group.by = "Sample", pt.size = 0) + theme(axis.title.x = element_blank()) + NoLegend()
+
+QC_pre_no_doublets_VlnPlots <- p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
+
+QC_pre_no_doublets_VlnPlots
+```
+
+```{r QC_pre_no_doublets_VlnPlots_zoom, fig.height=10, fig.width=8}
+p1 <- VlnPlot(EAM_preQC_no_doublets, features = "nCount_RNA", group.by = "Sample", pt.size = 0, y.max = 20000) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p2 <- VlnPlot(EAM_preQC_no_doublets, features = "nFeature_RNA", group.by = "Sample", pt.size = 0, y.max = 5000) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p3 <- VlnPlot(EAM_preQC_no_doublets, features = "percent.mt", group.by = "Sample", pt.size = 0, y.max = 25) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p4 <- VlnPlot(EAM_preQC_no_doublets, features = "percent.rp", group.by = "Sample", pt.size = 0, y.max = 50) + theme(axis.title.x = element_blank()) + NoLegend()
+
+QC_pre_no_doublets_VlnPlots_zoom <- p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
+
+QC_pre_no_doublets_VlnPlots_zoom
+```
+
+Filter based on number of counts, features and percentage of mitochondrial genes
+
+```{r}
+EAM <- subset(EAM_preQC_no_doublets, subset = 
+                nFeature_RNA > 200 &
+                percent.mt < 25 &
+                nCount_RNA > 500)
+
+table(EAM$Sample)
+table(EAM$Group)
+rm(EAM_preQC_no_doublets)
+```
+
+Check quality control parameters
+
+```{r QC_post_VlnPlots, fig.height=6, fig.width=8}
+p1 <- VlnPlot(EAM, features = "nCount_RNA", group.by = "Sample", pt.size = 0) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p2 <- VlnPlot(EAM, features = "nFeature_RNA", group.by = "Sample", pt.size = 0) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p3 <- VlnPlot(EAM, features = "percent.mt", group.by = "Sample", pt.size = 0) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p4 <- VlnPlot(EAM, features = "percent.rp", group.by = "Sample", pt.size = 0) + theme(axis.title.x = element_blank()) + NoLegend()
+
+QC_post_VlnPlots <- p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
+
+QC_post_VlnPlots
+```
+
+```{r QC_post_VlnPlots_zoom, fig.height=10, fig.width=8}
+p1 <- VlnPlot(EAM, features = "nCount_RNA", group.by = "Sample", pt.size = 0, y.max = 20000) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p2 <- VlnPlot(EAM, features = "nFeature_RNA", group.by = "Sample", pt.size = 0, y.max = 5000) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p3 <- VlnPlot(EAM, features = "percent.mt", group.by = "Sample", pt.size = 0, y.max = 25) + theme(axis.title.x = element_blank()) + NoLegend()
+
+p4 <- VlnPlot(EAM, features = "percent.rp", group.by = "Sample", pt.size = 0, y.max = 50) + theme(axis.title.x = element_blank()) + NoLegend()
+
+QC_post_VlnPlots_zoom <- p1 + p2 + p3 + p4 + plot_layout(ncol = 2)
+
+QC_post_VlnPlots_zoom
+```
+
+
+## Integration and clustering
+
+Normalization and scaling.
+
+```{r eval=FALSE}
+DefaultAssay(EAM) <- "RNA"
+EAM_not_integrated <- EAM %>%
+    NormalizeData() %>%
+    FindVariableFeatures(selection.method = "vst", nfeatures = 2000) %>% 
+    ScaleData(features = rownames(EAM), vars.to.regress = "percent.mt")
+```
+
+PCA 
+
+```{r, eval=FALSE, include=FALSE}
+EAM_not_integrated <- RunPCA(EAM_not_integrated, npcs = 50)
+```
+
+```{r eval=FALSE}
+saveRDS(EAM_not_integrated, 
+        here::here(output_dir_data, "EAM_not_integrated.rds"))
+```
+
+```{r}
+EAM_not_integrated <- readRDS(here::here(output_dir_data, "EAM_not_integrated.rds"))
+```
+
+
+```{r Elbow_not_integrated, fig.width=4, fig.height=4}
+ElbowPlot(EAM_not_integrated, ndims = 50)
+```
+
+Clustering without integration
+
+```{r eval=FALSE}
+EAM_not_integrated <- RunUMAP(EAM_not_integrated, dims = 1:40)
+EAM_not_integrated <- FindNeighbors(EAM_not_integrated, dims = 1:40)
+EAM_not_integrated <- FindClusters(EAM_not_integrated, resolution = seq(0.1, 0.8, by=0.1))
+```
+
+```{r Clustree_not_integrated, fig.width=6, fig.height=9}
+clustree::clustree(EAM_not_integrated@meta.data[,grep("RNA_snn_res", colnames(EAM_not_integrated@meta.data))],
+                   prefix = "RNA_snn_res.")
+```
+
+```{r UMAPs_not_integrated, fig.width=14, fig.height=4}
+DimPlot(EAM_not_integrated, reduction = "umap", shuffle = T,
+        group.by = c("RNA_snn_res.0.2", "Sample", "Group"), ncol = 3)
+```
+
+```{r eval=FALSE}
+saveRDS(EAM_not_integrated, 
+        here::here(output_dir_data, "EAM_not_integrated.rds"))
+```
+
+Integrate the samples using Harmony
+
+```{r eval=FALSE}
+EAM_integrated <- RunHarmony(EAM_not_integrated, assay.use="RNA", group.by.vars = "Sample", dims.use = 1:50)
+```
+
+```{r eval=FALSE}
+EAM_integrated <- RunUMAP(EAM_integrated, dims = 1:30, reduction = "harmony")
+EAM_integrated <- FindNeighbors(EAM_integrated, dims = 1:30, reduction = "harmony")
+EAM_integrated <- FindClusters(EAM_integrated, resolution = seq(0.1, 0.8, by=0.1))
+```
+
+```{r eval=FALSE}
+saveRDS(EAM_integrated, 
+        here::here(output_dir_data, "EAM_integrated_low_quality.rds"))
+```
+
+```{r}
+EAM_integrated <- readRDS(here::here(output_dir_data, "EAM_integrated_low_quality.rds"))
+```
+
+```{r Clustree_integrated_low_quality, fig.width=6, fig.height=9}
+clustree::clustree(EAM_integrated@meta.data[,grep("RNA_snn_res", colnames(EAM_integrated@meta.data))],
+                   prefix = "RNA_snn_res.")
+```
+
+```{r UMAPs_integrated_low_quality, fig.width=14, fig.height=4}
+EAM_integrated$RNA_snn_res.0.4 <- factor(EAM_integrated$RNA_snn_res.0.4, levels = as.character(0:21))
+
+DimPlot(EAM_integrated, reduction = "umap", shuffle = T,
+        group.by = c("RNA_snn_res.0.4", "Sample", "Group"), ncol = 3, label = T)
+
+```
+
+Find the markers that characterize each cell population
+
+```{r}
+DefaultAssay(EAM_integrated) <- "RNA"
+Idents(EAM_integrated) <- "RNA_snn_res.0.4"
+Markers <- FindAllMarkers(EAM_integrated, only.pos = TRUE, min.pct = 0.5, logfc.threshold = 0.5)
+write.csv(Markers, here::here(output_dir_data, "EAM_Markers_all_low_quality.csv"))
+Markers_top10 <- as.data.frame(Markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_log2FC))
+write.csv(Markers_top10, here::here(output_dir_data, "EAM_Markers_top10_low_quality.csv"))
+Markers_top3 <- as.data.frame(Markers %>% group_by(cluster) %>% top_n(n = 3, wt = avg_log2FC))
+write.csv(Markers_top3, here::here(output_dir_data, "EAM_Markers_top3_low_quality.csv"))
+```
+
+```{r Heatmap_low_quality, fig.width=15, fig.height=10}
+mapal <- colorRampPalette(RColorBrewer::brewer.pal(9,"RdBu"))(256)
+mapal <- rev(mapal[1:256])
+Heatmap <- DoHeatmap(subset(EAM_integrated, cells = sample(colnames(EAM_integrated), 10000)), draw.line = F, features = Markers_top10$gene) +
+  scale_fill_gradientn(colours = mapal) +
+  theme(text = element_text(size = 15), axis.text.y = element_text(size = 5)) +
+  theme(plot.margin = unit(c(0.1, 0, 0, 0), 
+                           "inches"))
+Heatmap
+```
+
+Check QC parameters in each cluster
+
+```{r QC_VlnPlots_low_quality, fig.width=10, fig.height=6}
+VlnPlot(EAM_integrated, features = c("nCount_RNA", "nFeature_RNA", "percent.mt", "percent.rp"), ncol = 2, pt.size = 0)
+```
+
+Remove low quality cells (clusters with low number of features and whose markers are mt genes, Malat1, etc)
+
+```{r}
+EAM_integrated <- subset(EAM_integrated, subset = RNA_snn_res.0.4 != "10" & RNA_snn_res.0.4 != "13")
+```
+
+Recluster
+
+```{r eval=FALSE}
+EAM_integrated <- RunUMAP(EAM_integrated, dims = 1:30, reduction = "harmony")
+EAM_integrated <- FindNeighbors(EAM_integrated, dims = 1:30, reduction = "harmony")
+EAM_integrated <- FindClusters(EAM_integrated, resolution = seq(0.1, 0.8, by=0.1))
+```
+
+```{r eval=FALSE}
+saveRDS(EAM_integrated, 
+        here::here(output_dir_data, "EAM_integrated.rds"))
+```
+
+```{r}
+EAM_integrated <- readRDS(here::here(output_dir_data, "EAM_integrated.rds"))
+```
+
+```{r Clustree_integrated, fig.width=6, fig.height=9}
+clustree::clustree(EAM_integrated@meta.data[,grep("RNA_snn_res", colnames(EAM_integrated@meta.data))],
+                   prefix = "RNA_snn_res.")
+```
+
+```{r UMAPs_integrated, fig.width=14, fig.height=4}
+EAM_integrated$RNA_snn_res.0.4 <- factor(EAM_integrated$RNA_snn_res.0.4, levels = as.character(0:19))
+
+DimPlot(EAM_integrated, reduction = "umap", shuffle = T,
+        group.by = c("RNA_snn_res.0.4", "Sample", "Group"), ncol = 3, label = T)
+```
+
+Find the markers that characterize each cell population
+
+```{r}
+DefaultAssay(EAM_integrated) <- "RNA"
+Idents(EAM_integrated) <- "RNA_snn_res.0.4"
+Markers <- FindAllMarkers(EAM_integrated, only.pos = TRUE, min.pct = 0.5, logfc.threshold = 0.5)
+write.csv(Markers, here::here(output_dir_data, "EAM_Markers_all.csv"))
+Markers_top10 <- as.data.frame(Markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_log2FC))
+write.csv(Markers_top10, here::here(output_dir_data, "EAM_Markers_top10.csv"))
+Markers_top3 <- as.data.frame(Markers %>% group_by(cluster) %>% top_n(n = 3, wt = avg_log2FC))
+write.csv(Markers_top3, here::here(output_dir_data, "EAM_Markers_top3.csv"))
+```
+
+Check cell cycle genes
+
+```{r Cell_cycle_UMAP, fig.width=5, fig.height=4}
+DefaultAssay(EAM_integrated) <- "RNA"
+mmus_s = gorth(cc.genes.updated.2019$s.genes, source_organism = "hsapiens", target_organism = "mmusculus")$ortholog_name
+mmus_g2m = gorth(cc.genes.updated.2019$g2m.genes, source_organism = "hsapiens", target_organism = "mmusculus")$ortholog_name
+EAM_integrated <- CellCycleScoring(EAM_integrated, s.features = mmus_s, g2m.features = mmus_g2m)
+DimPlot(EAM_integrated, reduction = "umap", shuffle = T,
+        group.by = "Phase")
+```
+
+
+
+
+
+
+
+```{r FeatPlot_markers, fig.width=15, fig.height=7.5}
+FeaturePlot(EAM_integrated, features = c("Cd3g", "Cd79a", "Col1a1", "Cd14", "Fcgr3", "Hdc", "Mki67", "Nkg7", "Ptprb", "Vwf", "Tnnt2", "Rgs5", "H2-DMb1", "Ppbp", "Ccl21a"), ncol = 5)
+```
+
+## Cell type annotation
+
+Annotate the clusters based on the characteristic markers
+
+```{r}
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("0", "6", "9"), "cell_type"] = "T-cells"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("2"), "cell_type"] = "B-cells"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("1", "11", "12"), "cell_type"] = "Fibroblasts"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("3", "5", "18"), "cell_type"] = "Monocytes/macrophages"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("4"), "cell_type"] = "Granulocytes"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("8"), "cell_type"] = "Proliferating lymphocytes"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("7"), "cell_type"] = "NK-cells"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("10", "16"), "cell_type"] = "Endothelial cells"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("15"), "cell_type"] = "CMs"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("13"), "cell_type"] = "SMC"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("14"), "cell_type"] = "DCs"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("17"), "cell_type"] = "Platelets"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.4 %in% c("19"), "cell_type"] = "Lymphatic cells"
+
+names(sort(desc(table(EAM_integrated$cell_type))))
+
+EAM_integrated$cell_type <- factor(EAM_integrated$cell_type, levels = names(sort(desc(table(EAM_integrated$cell_type)))))
+Idents(EAM_integrated) <- EAM_integrated$cell_type
+
+```
+
+```{r FindAllMarkers cell_type}
+DefaultAssay(EAM_integrated) <- "RNA"
+Idents(EAM_integrated) <- "cell_type"
+Markers <- FindAllMarkers(EAM_integrated, only.pos = TRUE, min.pct = 0.5, logfc.threshold = 0.5)
+write.csv(Markers, here::here(output_dir_data, "EAM_Markers_all_cell_type.csv"))
+Markers_top10 <- as.data.frame(Markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_log2FC))
+write.csv(Markers_top10, here::here(output_dir_data, "EAM_Markers_top10_cell_type.csv"))
+Markers_top3 <- as.data.frame(Markers %>% group_by(cluster) %>% top_n(n = 3, wt = avg_log2FC))
+write.csv(Markers_top3, here::here(output_dir_data, "EAM_Markers_top3_cell_type.csv"))
+```
+
+```{r Heatmap, fig.width=12, fig.height=8}
+Heatmap <- DoHeatmap(subset(EAM_integrated, cells = sample(colnames(EAM_integrated), 10000)), label = FALSE, draw.line = F, features = Markers_top10$gene) + 
+  scale_fill_gradientn(colours = mapal) +
+  theme(text = element_text(size = 12), 
+        axis.text.y = element_text(size = 4.5)) +
+  theme(plot.margin = unit(c(0, 0, 0, 0), "inches")) +
+  guides(fill = guide_colorbar(barwidth = 1, barheight = 4))
+Heatmap
+```
+
+```{r UMAP_cell_type, fig.width=6.5, fig.height=6}
+p <- DimPlot(EAM_integrated, group.by = "cell_type", reduction = "umap", label = F) + 
+  NoLegend() + 
+  theme(axis.text=element_text(size=10, face = "bold"), axis.title = element_text(size = 14, face = "bold")) + 
+  theme(plot.title = element_blank())
+LabelClusters(p, id = "cell_type", fontface = "bold", size = 5, repel = T)
+```
+
+```{r DotPlot_markers, fig.width=8, fig.height=12}
+DotPlot(EAM_integrated, assay = "RNA", features = rev(Markers_top3$gene), dot.scale = 5, cluster.idents = FALSE) +
+  RotatedAxis() +
+  coord_flip() +
+  theme(axis.title = element_blank(), axis.text.x = element_text(size = 14), axis.text.y = element_text(size = 13), legend.text = element_text(size = 9), legend.title = element_text(size = 11), plot.margin = unit(c(0, 0, 0, 0.1), 
+                           "inches"))
+```
+
+```{r Barplot_Sample, fig.height=4, fig.width=8, message=FALSE}
+color_palette_all <- c("#F8766D", "#00C1AB", "#24B700", "#E18A00", "#00ACFC", "#D575FE", "#BE9C00", "#00BE70", 
+                   "#8CAB00", "#00BBDA", "#FF65AC", "#8B93FF", "#EA8331")
+color_palette <- c("#F8766D", "#00C1AB", "#24B700", "#E18A00", "#00ACFC", "#D575FE", "#BE9C00", "#00BE70", 
+                   "#8CAB00", "#00BBDA", "#FF65AC", "#8B93FF", "#EA8331")
+
+props <- getTransformedProps(EAM_integrated$cell_type, EAM_integrated$Sample, transform="logit")
+
+par(mar = c(6, 4.5, 1, 16), xpd = TRUE)
+barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = color_palette, 
+        cex.names = 1.6, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1, cex.lab = 1.6)
+legend("topright", inset = c(-0.8, -0.08), legend = rownames(props$Proportions), fill = color_palette, bty = "n", cex = 1.4)
+```
+
+```{r Barplot_Group, fig.height=4, fig.width=8, message=FALSE}
+props <- getTransformedProps(EAM_integrated$cell_type, EAM_integrated$Group, transform="logit")
+
+par(mar = c(5.5, 4.5, 1, 16), xpd = TRUE)
+barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = color_palette, 
+        cex.names = 1.6, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1, cex.lab = 1.6)
+legend("topright", inset = c(-0.8, -0.07), legend = rownames(props$Proportions), fill = color_palette, bty = "n", cex = 1.4)
+```
+
+```{r FeatPlot_markers_fibro, fig.width=15, fig.height=10}
+FeaturePlot(EAM_integrated, features = c("Acta2", "Col1a1", "Col3a1", "Postn", "Vim", "Fn1"), ncol = 3, pt.size = 0.5)
+```
+
+```{r FeatPlot_markers_fibro_2, fig.width=12, fig.height=8}
+FeaturePlot(subset(EAM_integrated, cell_type == "Fibroblasts"), features = c("Acta2", "Col1a1", "Col3a1", "Postn", "Vim", "Fn1"), ncol = 3, pt.size = 0.5)
+```
+
+```{r FeatPlot_Acta2_Group, fig.width=16, fig.height=4}
+FeaturePlot(subset(EAM_integrated, cell_type == "Fibroblasts"), features = c("Acta2"), split.by = "Group", ncol = 4, pt.size = 0.5)
+```
+
+```{r FeatPlot_Postn_Group, fig.width=16, fig.height=4}
+FeaturePlot(subset(EAM_integrated, cell_type == "Fibroblasts"), features = c("Postn"), split.by = "Group", ncol = 4, pt.size = 0.5)
+```
+
+```{r FeatPlot_Acta2_Sample, fig.width=12, fig.height=12}
+FeaturePlot(subset(EAM_integrated, cell_type == "Fibroblasts"), features = c("Acta2"), split.by = "Sample", pt.size = 0.5) + plot_layout(ncol = 3, nrow = 3)
+```
+
+```{r FeatPlot_Postn_Sample, fig.width=15, fig.height=15}
+FeaturePlot(subset(EAM_integrated, cell_type == "Fibroblasts"), features = c("Postn"), split.by = "Sample", pt.size = 0.5) + plot_layout(ncol = 3, nrow = 3)
+```
+
+```{r save EAM_integrated final, eval = FALSE}
+saveRDS(EAM_integrated, 
+        here::here(output_dir_data, "EAM_integrated.rds"))
+```
