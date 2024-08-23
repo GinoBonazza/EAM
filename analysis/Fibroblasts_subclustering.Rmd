@@ -14,7 +14,7 @@ knitr::opts_chunk$set(message = FALSE)
 
 knitr::opts_chunk$set(cache = FALSE)
 
-knitr::opts_chunk$set(dpi = 600, fig.align = "center")
+knitr::opts_chunk$set(dpi = 300, fig.align = "center")
 ```
 
 ## Setup
@@ -62,6 +62,7 @@ library(AnnotationHub)
 library(ReactomePA)
 library(speckle)
 library(statmod)
+library(reactable)
 
 #Output paths
 output_dir_data <- here::here("output", current_file)
@@ -143,6 +144,10 @@ Markers_top10 <- as.data.frame(Markers %>% group_by(cluster) %>% top_n(n = 10, w
 write.csv(Markers_top10, here::here(output_dir_data, "FB_Markers_top10.csv"))
 Markers_top3 <- as.data.frame(Markers %>% group_by(cluster) %>% top_n(n = 3, wt = avg_log2FC))
 write.csv(Markers_top3, here::here(output_dir_data, "FB_Markers_top3.csv"))
+reactable(Markers, 
+          filterable = TRUE,
+          searchable = TRUE,
+          showPageSizeOptions = TRUE)
 ```
 
 ```{r Heatmap_FB, fig.width=15, fig.height=10}
@@ -150,17 +155,10 @@ mapal <- colorRampPalette(RColorBrewer::brewer.pal(9,"RdBu"))(256)
 mapal <- rev(mapal[1:256])
 Heatmap <- DoHeatmap(FB, draw.line = F, features = Markers_top10$gene) +
   scale_fill_gradientn(colours = mapal) +
-  theme(text = element_text(size = 15), axis.text.y = element_text(size = 5)) +
+  theme(text = element_text(size = 15), axis.text.y = element_text(size = 7)) +
   theme(plot.margin = unit(c(0.1, 0, 0, 0), 
                            "inches"))
 Heatmap
-```
-
-Check cell cycle genes
-
-```{r Cell_cycle_FB, fig.width=5, fig.height=4}
-DimPlot(FB, reduction = "umap", shuffle = T,
-        group.by = "Phase")
 ```
 
 ## Cell type annotation
@@ -172,9 +170,30 @@ FB@meta.data[FB@meta.data$RNA_snn_res.0.1 %in% c("0"), "cell_state"] = "FB1"
 FB@meta.data[FB@meta.data$RNA_snn_res.0.1 %in% c("1"), "cell_state"] = "FB2"
 FB@meta.data[FB@meta.data$RNA_snn_res.0.1 %in% c("2"), "cell_state"] = "FB3"
 FB@meta.data[FB@meta.data$RNA_snn_res.0.1 %in% c("3"), "cell_state"] = "FB4"
-FB@meta.data[FB@meta.data$RNA_snn_res.0.1 %in% c("4"), "cell_state"] = "FB5"
+FB@meta.data[FB@meta.data$RNA_snn_res.0.1 %in% c("4"), "cell_state"] = "Neuronal cells"
 
-FB$cell_state <- factor(FB$cell_state, levels = c("FB1", "FB2", "FB3","FB4","FB5"))
+FB$cell_state <- factor(FB$cell_state, levels = c("FB1", "FB2", "FB3","FB4","Neuronal cells"))
+Idents(FB) <- FB$cell_state
+```
+
+```{r UMAP_cell_state_neuro, fig.width=6.5, fig.height=6}
+p <- DimPlot(FB, group.by = "cell_state", reduction = "umap", label = F) + 
+  NoLegend() + 
+  theme(axis.text=element_text(size=10, face = "bold"), axis.title = element_text(size = 14, face = "bold")) + 
+  theme(plot.title = element_blank())
+LabelClusters(p, id = "cell_state", fontface = "bold", size = 7, repel = T)
+```
+
+```{r save FB_2, eval = FALSE}
+saveRDS(FB, 
+        here::here(output_dir_data, "FB.rds"))
+```
+
+Remove neuronal cells
+
+```{r subset neuro}
+FB <- subset(FB, cell_state %in% c("FB1", "FB2", "FB3", "FB4"))
+FB$cell_state <- factor(FB$cell_state, levels = c("FB1", "FB2", "FB3","FB4"))
 Idents(FB) <- FB$cell_state
 ```
 
@@ -191,14 +210,18 @@ Markers_top3 <- as.data.frame(Markers %>% group_by(cluster) %>% top_n(n = 3, wt 
 write.csv(Markers_top3, here::here(output_dir_data, "EAM_Markers_top3_cell_state.csv"))
 Markers_FB3 <- as.data.frame(Markers %>% group_by(cluster) %>% dplyr::filter(cluster == "FB3"))
 write.csv(Markers_FB3, here::here(output_dir_data, "EAM_Markers_FB3.csv"))
+reactable(Markers, 
+          filterable = TRUE,
+          searchable = TRUE,
+          showPageSizeOptions = TRUE)
 ```
 
 ```{r Heatmap_cell_state, fig.width=12, fig.height=8}
-Heatmap <- DoHeatmap(FB, label = FALSE, draw.line = F, features = Markers_top10$gene) + 
+Heatmap <- DoHeatmap(FB, draw.line = F, features = Markers_top10$gene) + 
   scale_fill_gradientn(colours = mapal) +
-  theme(text = element_text(size = 12), 
-        axis.text.y = element_text(size = 4.5)) +
-  theme(plot.margin = unit(c(0, 0, 0, 0), "inches")) +
+  theme(text = element_text(size = 15), 
+        axis.text.y = element_text(size = 8)) +
+  theme(plot.margin = unit(c(0.1, 0, 0, 0), "inches")) +
   guides(fill = guide_colorbar(barwidth = 1, barheight = 4))
 Heatmap
 ```
@@ -211,7 +234,14 @@ p <- DimPlot(FB, group.by = "cell_state", reduction = "umap", label = F) +
 LabelClusters(p, id = "cell_state", fontface = "bold", size = 7, repel = T)
 ```
 
-```{r DotPlot_markers, fig.width=6, fig.height=8}
+Check cell cycle genes
+
+```{r Cell_cycle_FB, fig.width=5, fig.height=4}
+DimPlot(FB, reduction = "umap", shuffle = T,
+        group.by = "Phase")
+```
+
+```{r DotPlot_markers, fig.width=5, fig.height=6}
 DotPlot(FB, assay = "RNA", features = rev(Markers_top3$gene), dot.scale = 5, cluster.idents = FALSE) +
   RotatedAxis() +
   coord_flip() +
@@ -330,14 +360,12 @@ dfsample$FB1 = bitr(dfsample$FB1, fromType="SYMBOL", toType="ENTREZID", OrgDb="o
 dfsample$FB2 = bitr(dfsample$FB2, fromType="SYMBOL", toType="ENTREZID", OrgDb="org.Mm.eg.db")
 dfsample$FB3 = bitr(dfsample$FB3, fromType="SYMBOL", toType="ENTREZID", OrgDb="org.Mm.eg.db")
 dfsample$FB4 = bitr(dfsample$FB4, fromType="SYMBOL", toType="ENTREZID", OrgDb="org.Mm.eg.db")
-dfsample$FB5 = bitr(dfsample$FB5, fromType="SYMBOL", toType="ENTREZID", OrgDb="org.Mm.eg.db")
 
 #do the same here, a line like below for each cluster
 genelist <- list("FB1" = dfsample$FB1$ENTREZID, 
                  "FB2" = dfsample$FB2$ENTREZID,
                  "FB3" = dfsample$FB3$ENTREZID,
-                 "FB4" = dfsample$FB4$ENTREZID,
-                 "FB5" = dfsample$FB5$ENTREZID
+                 "FB4" = dfsample$FB4$ENTREZID
 )
 
 # Calculate gene counts across cells
@@ -350,40 +378,22 @@ universe_genes <- names(gene_counts[gene_counts >= 3])
 universe_entrez <- bitr(universe_genes, fromType = "SYMBOL", toType = "ENTREZID", OrgDb = org.Mm.eg.db)$ENTREZID
 ```
 
-```{r Pathways_GO_MF, fig.height=8, fig.width=6}
-GO_MF <- compareCluster(geneCluster = genelist, fun = "enrichGO", ont = "MF",  OrgDb = "org.Mm.eg.db", universe = universe_entrez)
-GO_MF <- gsfilter(GO_MF, by = 'Count', min = 3)
-dotplot(GO_MF, label_format = 35, title = "GO - Molecular Function")
+```{r Pathways_GO, fig.height=8, fig.width=6}
+GO <- compareCluster(geneCluster = genelist, fun = "enrichGO", ont = "ALL",  OrgDb = "org.Mm.eg.db", universe = universe_entrez)
+GO <- gsfilter(GO, by = 'Count', min = 3)
+dotplot(GO, label_format = 35, title = "GO Over-representation analysis")
 ```
 
 ```{r Pathways_GO_MF_simplified, fig.height=8, fig.width=6}
-GO_MF_simplified <- simplify(
-  GO_MF,
+GO_simplified <- simplify(
+  GO,
   cutoff = 0.5,
   by = "p.adjust",
   select_fun = min,
   measure = "Wang",
   semData = NULL
 )
-dotplot(GO_MF_simplified, label_format = 35, title = "GO - Molecular Function")
-```
-
-```{r Pathways_GO_BP, fig.height=8, fig.width=6}
-GO_BP <- compareCluster(geneCluster = genelist, fun = "enrichGO", ont = "BP", OrgDb = "org.Mm.eg.db", universe = universe_entrez)
-GO_BP <- gsfilter(GO_BP, by = 'Count', min = 3)
-dotplot(GO_BP, label_format = 35, title = "GO - Biological process")
-```
-
-```{r Pathways_GO_BP_simplified, fig.height=8, fig.width=6}
-GO_BP_simplified <- simplify(
-  GO_BP,
-  cutoff = 0.5,
-  by = "p.adjust",
-  select_fun = min,
-  measure = "Wang",
-  semData = NULL
-)
-dotplot(GO_BP_simplified, label_format = 35, title = "GO - Biological process")
+dotplot(GO_simplified, label_format = 35, title = "GO Over-representation analysis")
 ```
 
 ```{r Pathways_KEGG, fig.height=8, fig.width=6}
@@ -392,15 +402,14 @@ KEGG <- gsfilter(KEGG, by = 'Count', min = 3)
 dotplot(KEGG, label_format = 35, title = "KEGG Pathways")
 ```
 
-
 ```{r Pathways_REACTOME, fig.height=8, fig.width=6}
 REACTOME <- compareCluster(geneCluster = genelist, fun = "enrichPathway", organism = 'mouse', universe = universe_entrez)
 REACTOME <- gsfilter(REACTOME, by = 'Count', min = 3)
 dotplot(REACTOME, label_format = 40, title = "REACTOME", showCategory = 4)
 ```
 
-```{r save FB final, eval = FALSE}
+```{r save FB final}
 saveRDS(FB, 
-        here::here(output_dir_data, "FB.rds"))
+        here::here(output_dir_data, "FB_no_neuro.rds"))
 ```
 
