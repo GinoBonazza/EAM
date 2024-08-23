@@ -1,0 +1,146 @@
+---
+title: "Differential expression analysis in Cardiomyocytes (d35 vs d35G)"
+author: "GinoBonazza (ginoandrea.bonazza@usz.ch)"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r knitr config, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(warning = FALSE)
+
+knitr::opts_chunk$set(message = FALSE)
+
+knitr::opts_chunk$set(cache = FALSE)
+
+knitr::opts_chunk$set(dpi = 300, fig.align = "center")
+```
+
+## Setup
+
+```{r setup, class.source = "fold-hide"}
+# Get current file name to make folder
+current_file <- "CMs_Diff_Exp"
+
+# Load libraries
+library(here)
+library(readr)
+library(readxl)
+library(xlsx)
+library(Seurat)
+library(DropletUtils)
+library(Matrix)
+library(scDblFinder)
+library(scCustomize)
+library(dplyr)
+library(ggplot2)
+library(magrittr)
+library(harmony)
+library(tidyverse)
+library(reshape2)
+library(S4Vectors)
+library(SingleCellExperiment)
+library(pheatmap)
+library(png)
+library(gridExtra)
+library(knitr)
+library(scales)
+library(RColorBrewer)
+library(Matrix.utils)
+library(tibble)
+library(ggplot2)
+library(scater)
+library(patchwork)
+library(statmod)
+library(ArchR)
+library(clustree)
+library(gprofiler2)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(AnnotationHub)
+library(ReactomePA)
+library(speckle)
+library(EnhancedVolcano)
+library(statmod)
+library(limma)
+library(reactable)
+
+
+#Output paths
+output_dir_data <- here::here("output", current_file)
+if (!dir.exists(output_dir_data)) dir.create(output_dir_data)
+
+if (!dir.exists(here::here("docs", "figure"))) dir.create(here::here("docs", "figure"))
+
+output_dir_figs <- here::here("docs", "figure", paste0(current_file, ".Rmd"))
+if (!dir.exists(output_dir_figs)) dir.create(output_dir_figs)
+```
+
+Load dataset and subset Cardiomyocytes
+
+```{r Load data}
+CM <- readRDS(here::here("output", "QC_integration_annotation_Ganciclovir", "EAM_integrated.rds"))
+CM <- subset(CM, cell_type == "CMs")
+table(CM$Sample)
+table(CM$Group)
+```
+
+```{r}
+CM_d35 <- subset(CM, Group %in% c("d35", "d35+G"))
+table(CM_d35$Group)
+```
+
+```{r}
+Idents(CM_d35) <- CM_d35$Group
+DE <- FindMarkers(CM_d35, test.use = "MAST", ident.1 = "d35+G", ident.2 = "d35", min.pct = 0.05, logfc.threshold = 0, assay = "RNA")
+DE$gene <- rownames(DE)
+write.csv(DE, file = here::here(output_dir_data, "DE.csv"), quote=F, row.names = F)
+```
+
+```{r save FB}
+signif <- filter(DE, abs(avg_log2FC) > 0.25 & p_val_adj < 0.05) %>%
+  arrange(desc(avg_log2FC))
+reactable(signif, 
+          filterable = TRUE,
+          searchable = TRUE,
+          showPageSizeOptions = TRUE)
+```
+
+```{r, fig.height=7.5, fig.width=15}
+VlnPlot(CM_d35, features = signif$gene, ncol = 5, group.by = "Sample")
+```
+
+
+```{r, fig.height=7.5, fig.width=18}
+VlnPlot(CM, features = signif$gene, ncol = 5, group.by = "Sample")
+```
+
+```{r volcano, fig.width=3, fig.height=4}
+volcano <- EnhancedVolcano(DE,
+                  lab = DE$gene,
+                  x = "avg_log2FC",
+                  y = "p_val_adj",
+                  labSize = 0,
+                  titleLabSize = 16,
+                  subtitleLabSize = 14,
+                  axisLabSize = 12,
+                  captionLabSize = 9,
+                  pointSize = 0.5,
+                  FCcutoff = 0.25,
+                  pCutoff  = 0.05,
+                  col = c("black", "black", "black", "red"),
+                  colAlpha = 1,
+                  drawConnectors = FALSE,
+                  boxedLabels = FALSE,
+                  subtitle = NULL,
+                  title = "Cardiomyocytes"
+  ) + theme(legend.position = "none")
+volcano
+```
+
+```{r save CM final, eval = FALSE}
+saveRDS(CM, 
+        here::here(output_dir_data, "CM.rds"))
+```
+
