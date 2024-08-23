@@ -12,6 +12,12 @@ navbar:
         href: QC_integration_annotation.html
       - text: "Fibroblasts subclustering"
         href: Fibroblasts_subclustering.html
+      - text: "QC, integration, annotation (Ganciclovir)"
+        href: QC_integration_annotation_Ganciclovir.html
+      - text: "Fibroblasts subclustering  (Ganciclovir)"
+        href: Fibroblasts_subclustering_Ganciclovir.html
+      - text: "Cardiomyocytes differential expression (d35 vs d35+G)"
+        href: FCMs_Diff_Exp.html
   - text: About
     href: about.html
   - text: License
