@@ -14,7 +14,7 @@ knitr::opts_chunk$set(message = FALSE)
 
 knitr::opts_chunk$set(cache = FALSE)
 
-knitr::opts_chunk$set(dpi = 600, fig.align = "center")
+knitr::opts_chunk$set(dpi = 300, fig.align = "center")
 ```
 
 ## Setup
@@ -381,28 +381,30 @@ DimPlot(EAM_integrated, reduction = "umap", shuffle = T,
 Annotate the clusters based on the characteristic markers
 
 ```{r}
-EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("0", "3", "4", "11"), "cell_type"] = "T-cells"
-EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("1"), "cell_type"] = "B-cells"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("0", "3", "4", "11"), "cell_type"] = "T cells"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("1"), "cell_type"] = "B cells"
 EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("2"), "cell_type"] = "Fibroblasts"
-EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("5", "6", "8"), "cell_type"] = "Myeloid cells"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("5", "6"), "cell_type"] = "Myeloid cells"
 EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("7"), "cell_type"] = "Proliferating lymphocytes"
-EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("9"), "cell_type"] = "NK-cells"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("8"), "cell_type"] = "Granulocytes"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("9"), "cell_type"] = "NK cells"
 EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("10"), "cell_type"] = "Endothelial cells"
-EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("12"), "cell_type"] = "CMs"
-EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("13"), "cell_type"] = "Mesothelial cells"
-EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("14"), "cell_type"] = "SMC"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("12"), "cell_type"] = "Cardiomyocytes"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("13"), "cell_type"] = "Epicardial cells"
+EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("14"), "cell_type"] = "Smooth muscle cells"
 EAM_integrated@meta.data[EAM_integrated@meta.data$RNA_snn_res.0.2 %in% c("15"), "cell_type"] = "Platelets"
 
-EAM_integrated$cell_type <- factor(EAM_integrated$cell_type, levels = c("T-cells", 
-                                                                        "B-cells",
+EAM_integrated$cell_type <- factor(EAM_integrated$cell_type, levels = c("T cells", 
+                                                                        "B cells",
                                                                         "Fibroblasts",
                                                                         "Myeloid cells",
                                                                         "Proliferating lymphocytes",
-                                                                        "NK-cells",
+                                                                        "Granulocytes",
+                                                                        "NK cells",
                                                                         "Endothelial cells",
-                                                                        "CMs",
-                                                                        "Mesothelial cells",
-                                                                        "SMC",
+                                                                        "Cardiomyocytes",
+                                                                        "Epicardial cells",
+                                                                        "Smooth muscle cells",
                                                                         "Platelets"))
 Idents(EAM_integrated) <- EAM_integrated$cell_type
 ```
@@ -419,6 +421,8 @@ write.csv(Markers_top3, here::here(output_dir_data, "EAM_Markers_top3_cell_type.
 ```
 
 ```{r Heatmap, fig.width=12, fig.height=8}
+mapal <- colorRampPalette(RColorBrewer::brewer.pal(9,"RdBu"))(256)
+mapal <- rev(mapal[1:256])
 Heatmap <- DoHeatmap(EAM_integrated, label = FALSE, draw.line = F, features = Markers_top10$gene) + 
   scale_fill_gradientn(colours = mapal) +
   theme(text = element_text(size = 12), 
@@ -429,11 +433,27 @@ Heatmap
 ```
 
 ```{r UMAP_cell_type, fig.width=6.5, fig.height=6}
-p <- DimPlot(EAM_integrated, group.by = "cell_type", reduction = "umap", label = F) + 
+p <- DimPlot(EAM_integrated, group.by = "cell_type", reduction = "umap", label = F, shuffle = T) + 
   NoLegend() + 
-  theme(axis.text=element_text(size=10, face = "bold"), axis.title = element_text(size = 14, face = "bold")) + 
+  theme(axis.text=element_text(size=16, face = "bold"), axis.title = element_text(size = 20, face = "bold")) + 
   theme(plot.title = element_blank())
-LabelClusters(p, id = "cell_type", fontface = "bold", size = 5, repel = T)
+LabelClusters(p, id = "cell_type", fontface = "bold", size = 6.5, repel = T)
+```
+
+```{r UMAP_cell_type_2, fig.width=6.5, fig.height=6}
+p <- DimPlot(EAM_integrated, group.by = "cell_type", reduction = "umap", label = F, shuffle = T) + 
+  NoLegend() + 
+  theme(axis.text=element_text(size=16, face = "bold"), axis.title = element_text(size = 20, face = "bold")) + 
+  theme(plot.title = element_blank())
+LabelClusters(p, id = "cell_type", fontface = "bold", size = 7, repel = T)
+```
+
+```{r UMAP_cell_type_3, fig.width=6.5, fig.height=6}
+p <- DimPlot(EAM_integrated, group.by = "cell_type", reduction = "umap", label = F, shuffle = T) + 
+  NoLegend() + 
+  theme(axis.text=element_text(size=16, face = "bold"), axis.title = element_text(size = 20, face = "bold")) + 
+  theme(plot.title = element_blank())
+LabelClusters(p, id = "cell_type", fontface = "bold", size = 7.5, repel = T)
 ```
 
 ```{r DotPlot_markers, fig.width=8, fig.height=12}
@@ -445,7 +465,7 @@ DotPlot(EAM_integrated, assay = "RNA", features = rev(Markers_top3$gene), dot.sc
 ```
 
 ```{r FeatPlot_markers, fig.width=12, fig.height=8}
-FeaturePlot(EAM_integrated, features = c("Cd3e", "Ms4a1", "Col1a1", "Cxcl2", "Mki67", "Nkg7", "Ptprb", "Tnnt2", "Msln", "Rgs5", "Ppbp"), ncol = 4)
+FeaturePlot(EAM_integrated, features = c("Cd3e", "Ms4a1", "Col1a1", "Lyz2", "S100a9", "Mki67", "Nkg7", "Ptprb", "Tnnt2", "Igfbp6", "Rgs5", "Ppbp"), ncol = 4)
 ```
 
 ```{r FeatPlot_markers_fibro, fig.width=15, fig.height=10}
