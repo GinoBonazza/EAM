@@ -216,22 +216,25 @@ reactable(Markers,
           showPageSizeOptions = TRUE)
 ```
 
-```{r Heatmap_cell_state, fig.width=12, fig.height=8}
+```{r Heatmap_cell_state, fig.width=9, fig.height=5}
 Heatmap <- DoHeatmap(FB, draw.line = F, features = Markers_top10$gene) + 
   scale_fill_gradientn(colours = mapal) +
-  theme(text = element_text(size = 15), 
-        axis.text.y = element_text(size = 8)) +
-  theme(plot.margin = unit(c(0.1, 0, 0, 0), "inches")) +
-  guides(fill = guide_colorbar(barwidth = 1, barheight = 4))
+  theme(text = element_text(size = 13), 
+    axis.text.y = element_text(size = 9, color = "black"),
+    plot.margin = unit(c(0.2, 0, 0, 0), "inches")
+  ) +
+  guides(fill = guide_colorbar(barwidth = 1, barheight = 6), color = "none")
 Heatmap
 ```
 
 ```{r UMAP_cell_state, fig.width=6.5, fig.height=6}
 p <- DimPlot(FB, group.by = "cell_state", reduction = "umap", label = F) + 
   NoLegend() + 
-  theme(axis.text=element_text(size=10, face = "bold"), axis.title = element_text(size = 14, face = "bold")) + 
+  theme(axis.text=element_text(size=16, face = "bold"), axis.title = element_text(size = 20, face = "bold")) + 
   theme(plot.title = element_blank())
-LabelClusters(p, id = "cell_state", fontface = "bold", size = 7, repel = T)
+LabelClusters(p, id = "cell_state", fontface = "bold", size = 11, repel = T)
+colors_fb <- hue_pal()(length(unique(Idents(FB))))
+#show_col(colors_fb)
 ```
 
 Check cell cycle genes
@@ -249,12 +252,45 @@ DotPlot(FB, assay = "RNA", features = rev(Markers_top3$gene), dot.scale = 5, clu
                            "inches"))
 ```
 
-```{r VlnPlot_markers_fibro, fig.width=12, fig.height=8}
-VlnPlot(FB, features = c("Acta2", "Col1a1", "Col3a1", "Postn", "Vim", "Fn1"), ncol = 3)
+```{r DotPlot_markers_2, fig.width=5, fig.height=6}
+DotPlot(FB, assay = "RNA", features = rev(Markers_top10$gene), dot.scale = 5, cluster.idents = FALSE) +
+  RotatedAxis() +
+  coord_flip() +
+  theme(axis.title = element_blank(), axis.text.x = element_text(size = 15, face = "bold"), axis.text.y = element_text(size = 11), legend.text = element_text(size = 9), legend.title = element_text(size = 11), plot.margin = unit(c(0, 0, 0, 0.1), 
+                           "inches"))
 ```
 
-```{r VlnPlot_markers_fibro_2, fig.width=16, fig.height=8}
-VlnPlot(FB, features = c("Cthrc1", "Tnc", "Spp1", "Timp1", "Tpm2", "Tagln2", "Actg1", "Actb"), ncol = 4)
+```{r DotPlot_markers_3, fig.width=9, fig.height=5}
+Idents(FB) <- factor(FB$cell_state, levels = rev(c("FB1", "FB2", "FB3","FB4")))
+
+DotPlot(FB, assay = "RNA", features = Markers_top10$gene, dot.scale = 5, cluster.idents = FALSE) +
+  RotatedAxis() +
+  theme(axis.title = element_blank(), axis.text.y = element_text(size = 15, face = "bold"), axis.text.x = element_text(size = 11), legend.text = element_text(size = 9), legend.title = element_text(size = 10), plot.margin = unit(c(0, 0, 0, 0.1), 
+                           "inches"))
+```
+
+```{r VlnPlot_markers_fibro, fig.width=10, fig.height=6}
+Idents(FB) <- factor(FB$cell_state, levels = c("FB1", "FB2", "FB3","FB4"))
+plot_list <- lapply(c("Acta2", "Col1a1", "Col3a1", "Postn", "Vim", "Fn1"), function(feature) {
+  p <- VlnPlot(FB, features = feature, cols = colors_fb) + 
+    theme(axis.title.x = element_blank(),
+          axis.text.x = element_text(size = 16),
+          plot.title = element_text(size = 22)) + NoLegend()
+}) 
+
+CombinePlots(plots = plot_list, ncol = 3)
+```
+
+```{r VlnPlot_markers_fibro_2, fig.width=13.3, fig.height=6}
+Idents(FB) <- factor(FB$cell_state, levels = c("FB1", "FB2", "FB3","FB4"))
+plot_list <- lapply(c("Cthrc1", "Tnc", "Spp1", "Timp1", "Tpm2", "Tagln2", "Actg1", "Actb"), function(feature) {
+  p <- VlnPlot(FB, features = feature, cols = colors_fb) + 
+    theme(axis.title.x = element_blank(),
+          axis.text.x = element_text(size = 16),
+          plot.title = element_text(size = 22)) + NoLegend()
+}) 
+
+CombinePlots(plots = plot_list, ncol = 4)
 ```
 
 ```{r FeatPlot_markers_fibro, fig.width=15, fig.height=10}
@@ -282,7 +318,15 @@ VlnPlot(FB, features = "Acta2", idents = c("FB3", "FB4"), group.by = "cell_state
 ```
 
 ```{r VlnPlot_FB3_markers, fig.width=10, fig.height=6}
-VlnPlot(FB, features = c("Acta2", "Col1a1", "Col3a1", "Postn", "Vim", "Fn1"), idents = c("FB3"), group.by = "cell_state", split.by = "Group") + theme(axis.title.x = element_blank()) 
+palette <- c("#CD9600", "#00BFC4", "#FF61CC")
+plot_list <- lapply(c("Acta2", "Col1a1", "Col3a1", "Postn", "Vim", "Fn1"), function(feature) {
+  p <- VlnPlot(FB, features = feature, cols = palette, idents = c("FB3"), group.by = "Group") + 
+    theme(axis.title.x = element_blank(),
+          axis.text.x = element_text(size = 16),
+          plot.title = element_text(size = 22)) + NoLegend()
+}) 
+
+CombinePlots(plots = plot_list, ncol = 3)
 ```
 
 ```{r Barplot_FB_Sample, fig.height=6, fig.width=8, message=FALSE}
@@ -299,56 +343,48 @@ legend("topright", inset = c(-0.4, 0.1), legend = rownames(props$Proportions), f
 ```
 
 ```{r Barplot_FB_Group, fig.height=6, fig.width=8, message=FALSE}
-color_palette_all <- c("#F8766D", "#00C1AB", "#24B700", "#E18A00", "#00ACFC", "#D575FE", "#BE9C00", "#00BE70", 
-                   "#8CAB00", "#00BBDA", "#FF65AC", "#8B93FF", "#EA8331")
-color_palette <- c("#F8766D", "#24B700", "#00ACFC")
+palette <- c("#CD9600", "#00BFC4", "#FF61CC")
 
 props <- getTransformedProps(FB$Group, FB$cell_state, transform="logit")
 
-par(mar = c(5, 5, 3, 11), xpd = TRUE)
-barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = color_palette, 
-        cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
-legend("topright", inset = c(-0.32, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = "n", cex = 2)
+par(mar = c(6, 7, 2, 11), xpd = TRUE, mgp = c(4, 0.5, 0)) 
+barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = palette, 
+        cex.names = 2.8, las = 2, font.lab = 2, font.axis = 2, cex.axis = 2, cex.lab = 2.8)
+legend("topright", inset = c(-0.45, 0.24), legend = rownames(props$Proportions), fill = palette, bty = "n", cex = 2.8)
 ```
 
 ```{r Barplot_FB_Cell_cycle_cell_state, fig.height=6, fig.width=8, message=FALSE}
-color_palette_all <- c("#F8766D", "#00C1AB", "#24B700", "#E18A00", "#00ACFC", "#D575FE", "#BE9C00", "#00BE70", 
-                   "#8CAB00", "#00BBDA", "#FF65AC", "#8B93FF", "#EA8331")
-color_palette <- c("#F8766D", "#24B700", "#00ACFC")
+palette <- hue_pal()(3)
+palette[1] <- "#ED813E"
 
 props <- getTransformedProps(FB$Phase, FB$cell_state, transform="logit")
 
-par(mar = c(5, 5, 3, 11), xpd = TRUE)
-barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = color_palette, 
-        cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
-legend("topright", inset = c(-0.35, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = "n", cex = 2)
+par(mar = c(6, 7, 2, 11), xpd = TRUE, mgp = c(4, 0.5, 0)) 
+barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = palette, 
+        cex.names = 2.8, las = 2, font.lab = 2, font.axis = 2, cex.axis = 2, cex.lab = 2.8)
+legend("topright", inset = c(-0.5, 0.24), legend = rownames(props$Proportions), fill = palette, bty = "n", cex = 2.8)
 ```
-
 ```{r Barplot_FB_Cell_cycle_group, fig.height=6, fig.width=8, message=FALSE}
-color_palette_all <- c("#F8766D", "#00C1AB", "#24B700", "#E18A00", "#00ACFC", "#D575FE", "#BE9C00", "#00BE70", 
-                   "#8CAB00", "#00BBDA", "#FF65AC", "#8B93FF", "#EA8331")
-color_palette <- c("#F8766D", "#24B700", "#00ACFC")
+palette <- hue_pal()(3)
+palette[1] <- "#ED813E"
+
 FB3 <- subset(FB, cell_state == "FB3")
 
 props <- getTransformedProps(FB3$Phase, FB3$Group, transform="logit")
 
-par(mar = c(5, 5, 3, 11), xpd = TRUE)
-barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = color_palette, 
-        cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
-legend("topright", inset = c(-0.35, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = "n", cex = 2)
+par(mar = c(6, 7, 2, 11), xpd = TRUE, mgp = c(4, 0.5, 0)) 
+barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = palette, 
+        cex.names = 2.8, las = 2, font.lab = 2, font.axis = 2, cex.axis = 2, cex.lab = 2.8)
+legend("topright", inset = c(-0.5, 0.24), legend = rownames(props$Proportions), fill = palette, bty = "n", cex = 2.8)
 ```
 
 ```{r Barplot_FB_Cell_state, fig.height=6, fig.width=8, message=FALSE}
-color_palette_all <- c("#F8766D", "#00C1AB", "#24B700", "#E18A00", "#00ACFC", "#D575FE", "#BE9C00", "#00BE70", 
-                   "#8CAB00", "#00BBDA", "#FF65AC", "#8B93FF", "#EA8331")
-color_palette <- c("#F8766D", "#24B700", "#00ACFC", "#E18A00", "#D575FE")
-
 props <- getTransformedProps(FB$cell_state, FB$Group, transform="logit")
 
-par(mar = c(5, 5, 3, 11), xpd = TRUE)
-barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = color_palette, 
-        cex.names = 2, las = 2, font.lab = 2, font.axis = 2, cex.axis = 1.2, cex.lab = 2)
-legend("topright", inset = c(-0.35, 0.3), legend = rownames(props$Proportions), fill = color_palette, bty = "n", cex = 2)
+par(mar = c(6, 7, 2, 11), xpd = TRUE, mgp = c(4, 0.5, 0)) 
+barplot(props$Proportions, legend = FALSE, ylab = "Proportions", col = colors_fb, 
+        cex.names = 2.8, las = 2, font.lab = 2, font.axis = 2, cex.axis = 2, cex.lab = 2.8)
+legend("topright", inset = c(-0.46, 0.24), legend = rownames(props$Proportions), fill = palette, bty = "n", cex = 2.8)
 ```
 
 ```{r}
